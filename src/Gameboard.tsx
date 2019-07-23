@@ -1,8 +1,19 @@
 import React, { CSSProperties } from "react";
-import { ColorPin } from "./ColorPin/ColorPin";
 import { PinRow } from "./PinRow/PinRow";
+import { State } from "./State";
 
-export class GameBoard extends React.Component {
+export class GameBoard extends React.Component<{}, State> {
+
+    /**
+     *
+     */
+    constructor() {
+        super({});
+
+        this.state = {
+            row: 1,
+        };
+    }
 
     public render(): React.ReactElement {
 
@@ -11,7 +22,6 @@ export class GameBoard extends React.Component {
             flexDirection: "row",
             flexGrow: 1,
             flex: 1,
-            height: "100%",
         } as CSSProperties;
 
         const columnStyle = {
@@ -24,14 +34,19 @@ export class GameBoard extends React.Component {
         const gameboardStyle: CSSProperties = {
             ...columnStyle,
             backgroundColor: "brown",
-            height: "100%",
+            flexShrink: 0,
+            flexDirection: "column",
         };
+
+        const gameRows = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
         return (
             <div style={divisionStyle} >
                 <div style={columnStyle}></div>
                 <div style={gameboardStyle}>
-                    <PinRow readonly={false} />
+                    {
+                        gameRows.map((row, index) => <PinRow key={index} current={this.state.row === row} row={row} readonly={false} />)
+                    }
                 </div>
                 <div style={columnStyle}></div>
             </div>

@@ -1,5 +1,5 @@
 
-import React from "react";
+import React, { CSSProperties } from "react";
 import { ColorPin } from "../ColorPin/ColorPin";
 import { Colors } from "../Types/Colors";
 import { Properties } from "./Properties";
@@ -25,19 +25,38 @@ export class PinRow extends React.Component<Properties, State> {
     }
 
     public render(): React.ReactNode {
+
+        const style: CSSProperties = {
+            flexDirection: "column",
+            backgroundColor: this.props.current ? "blue" : "brown",
+        };
+
         return (
-            <div>
+            <div style={style}>
                 <ColorPin onChange={this.onChange} pinNumber={1} color={this.state.pin1Color} />
                 <ColorPin onChange={this.onChange} pinNumber={2} color={this.state.pin2Color} />
                 <ColorPin onChange={this.onChange} pinNumber={3} color={this.state.pin3Color} />
-                <ColorPin onChange={this.onChange} pinNumber={3} color={this.state.pin4Color} />
+                <ColorPin onChange={this.onChange} pinNumber={4} color={this.state.pin4Color} />
             </div>
         );
     }
 
     private onChange(color: Colors, pinNumber: number): void {
-        if (this.props.readonly) {
-            return;
+        if (!this.props.readonly) {
+            switch (pinNumber) {
+                case 1:
+                    this.setState({ pin1Color: color });
+                    break;
+                case 2:
+                    this.setState({ pin2Color: color });
+                    break;
+                case 3:
+                    this.setState({ pin3Color: color });
+                    break;
+                case 4:
+                    this.setState({ pin4Color: color });
+                    break;
+            }
         }
     }
 }

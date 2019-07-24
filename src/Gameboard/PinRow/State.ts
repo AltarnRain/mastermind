@@ -1,4 +1,4 @@
-import { Colors } from "../Types/Colors";
+import { Colors } from "../../Types/Colors";
 
 export interface State {
     pin1Color: Colors;

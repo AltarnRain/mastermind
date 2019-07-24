@@ -1,4 +1,4 @@
-import { Colors } from "../Types/Colors";
+import { Colors } from "../../../Types/Colors";
 
 /**
  * Color pin properties

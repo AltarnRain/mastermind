@@ -1,7 +1,7 @@
 
 import React, { CSSProperties } from "react";
-import { ColorPin } from "../ColorPin/ColorPin";
-import { Colors } from "../Types/Colors";
+import { Colors } from "../../Types/Colors";
+import { ColorPin } from "./ColorPin/ColorPin";
 import { Properties } from "./Properties";
 import { State } from "./State";
 
@@ -27,8 +27,7 @@ export class PinRow extends React.Component<Properties, State> {
     public render(): React.ReactNode {
 
         const style: CSSProperties = {
-            flexDirection: "column",
-            backgroundColor: this.props.current ? "blue" : "brown",
+            flexDirection: "column"
         };
 
         return (

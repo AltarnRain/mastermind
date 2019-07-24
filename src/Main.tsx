@@ -1,6 +1,6 @@
 import React, { CSSProperties } from "react";
 import "./App.css";
-import { GameBoard } from "./Gameboard";
+import { GameBoard } from "./Gameboard/Gameboard";
 
 export class Main extends React.Component {
 

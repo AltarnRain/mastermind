@@ -3,5 +3,5 @@
  */
 
 export interface State {
-    row: number;
+    move: number;
 }

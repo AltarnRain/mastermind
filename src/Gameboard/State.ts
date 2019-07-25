@@ -5,7 +5,7 @@ import { Colors } from "../Types/Colors";
  */
 
 export interface State {
-    move: number;
+    currentRow: number;
 
     gameRows: GameRow[];
 }

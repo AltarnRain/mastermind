@@ -1,6 +1,8 @@
 import React, { CSSProperties } from "react";
+import reactDom from "react-dom";
 import { Colors } from "../Types/Colors";
 import { PinRow } from "./PinRow/PinRow";
+import { SelectColor } from "./SelectColor/SelectColor";
 import { State } from "./State";
 
 export class GameBoard extends React.Component<{}, State> {
@@ -14,7 +16,7 @@ export class GameBoard extends React.Component<{}, State> {
         const allBlack: Colors[] = ["black", "black", "black", "black"];
 
         this.state = {
-            move: 1,
+            currentRow: 0,
             gameRows: [
                 { hintColors: [...allBlack], pinColors: [...allBlack] },
                 { hintColors: [...allBlack], pinColors: [...allBlack] },
@@ -30,6 +32,7 @@ export class GameBoard extends React.Component<{}, State> {
         };
 
         this.onMoveDone = this.onMoveDone.bind(this);
+        this.onPinClick = this.onPinClick.bind(this);
     }
 
     /**
@@ -65,9 +68,10 @@ export class GameBoard extends React.Component<{}, State> {
                     {
                         this.state.gameRows.map((row, index) => <PinRow
                             key={index}
-                            current={this.state.move === index + 1}
+                            current={this.state.currentRow === index}
                             pinColors={row.pinColors}
-                            hintColors={row.hintColors} />)
+                            hintColors={row.hintColors}
+                            onPinClick={this.onPinClick} />)
                     }
                     <div style={outer}>
                         <button style={doneButtonStyle} onClick={this.onMoveDone}>Done!</button>
@@ -78,10 +82,19 @@ export class GameBoard extends React.Component<{}, State> {
     }
 
     private onMoveDone(): void {
-        this.setState({ move: this.state.move + 1 });
+        this.setState({ currentRow: this.state.currentRow + 1 });
     }
 
     private onPinClick(pinNumber: number): void {
+
+        const portalElement = document.getElementById("portal");
+
+        if (portalElement) {
+            reactDom.createPortal(<SelectColor onPickColor={this.onPickColor} />, portalElement);
+        }
+    }
+
+    private onPickColor(color: Colors): void {
         // no implementation
     }
 }

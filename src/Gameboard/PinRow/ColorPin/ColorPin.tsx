@@ -31,7 +31,7 @@ export class ColorPin extends React.Component<Properties> {
     }
     private onClick() {
         if (this.props.onPinClick) {
-            this.props.onPinClick(this.props.pinNumber);
+            this.props.onPinClick(this.props.pinNumber, this.props.color);
         }
     }
 }

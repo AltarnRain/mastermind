@@ -15,10 +15,10 @@ export class ColorPin extends React.Component<Properties> {
     public render(): React.ReactNode {
 
         const colorPinStyle: CSSProperties = {
+            display: "flex",
             borderRadius: "50%",
             color: this.props.color,
             backgroundColor: this.props.color,
-            borderWidth: this.props.color === "black" ? 5 : 5,
             flexGrow: 0,
             width: "30px",
             height: "30px",
@@ -30,8 +30,8 @@ export class ColorPin extends React.Component<Properties> {
         );
     }
     private onClick(event: React.SyntheticEvent) {
-        if (this.props.onChange) {
-            this.props.onChange("red", this.props.pinNumber);
+        if (this.props.onPinClick) {
+            this.props.onPinClick(this.props.pinNumber);
         }
     }
 }

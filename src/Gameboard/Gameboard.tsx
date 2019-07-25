@@ -1,6 +1,8 @@
 import React, { CSSProperties } from "react";
+import { Colors } from "../Types/Colors";
 import { PinRow } from "./PinRow/PinRow";
 import { State } from "./State";
+
 export class GameBoard extends React.Component<{}, State> {
 
     /**
@@ -9,8 +11,22 @@ export class GameBoard extends React.Component<{}, State> {
     constructor(props: object) {
         super(props);
 
+        const allBlack: Colors[] = ["black", "black", "black", "black"];
+
         this.state = {
             move: 1,
+            gameRows: [
+                { hintColors: [...allBlack], pinColors: [...allBlack] },
+                { hintColors: [...allBlack], pinColors: [...allBlack] },
+                { hintColors: [...allBlack], pinColors: [...allBlack] },
+                { hintColors: [...allBlack], pinColors: [...allBlack] },
+                { hintColors: [...allBlack], pinColors: [...allBlack] },
+                { hintColors: [...allBlack], pinColors: [...allBlack] },
+                { hintColors: [...allBlack], pinColors: [...allBlack] },
+                { hintColors: [...allBlack], pinColors: [...allBlack] },
+                { hintColors: [...allBlack], pinColors: [...allBlack] },
+                { hintColors: [...allBlack], pinColors: [...allBlack] },
+            ]
         };
 
         this.onMoveDone = this.onMoveDone.bind(this);
@@ -43,13 +59,16 @@ export class GameBoard extends React.Component<{}, State> {
             margin: 5,
         };
 
-        const gameRows = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-
         return (
             <div style={outer}>
                 <div style={gameboardStyle}>
                     {
-                        gameRows.map((row, index) => <PinRow key={index} row={row} readonly={false} current={this.state.move === row} hintColors={[]} />)
+                        this.state.gameRows.map((row, index) => <PinRow
+                            key={index}
+                            readonly={false}
+                            current={this.state.move === index + 1}
+                            pinColors={row.pinColors}
+                            hintColors={row.hintColors} />)
                     }
                     <div style={outer}>
                         <button style={doneButtonStyle} onClick={this.onMoveDone}>Done!</button>
@@ -61,5 +80,9 @@ export class GameBoard extends React.Component<{}, State> {
 
     private onMoveDone(): void {
         this.setState({ move: this.state.move + 1 });
+    }
+
+    private onPinClick(pinNumber: number): void {
+        // no implementation
     }
 }

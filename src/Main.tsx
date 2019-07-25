@@ -12,7 +12,7 @@ export class Main extends React.Component {
     };
 
     return (
-      <div style={{height: "90vh"}}>
+      <div>
         <p style={titleStyle}>Welcome to MasterMind</p>
         <GameBoard />
       </div>

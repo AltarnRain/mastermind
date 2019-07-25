@@ -6,8 +6,8 @@ export class GameBoard extends React.Component<{}, State> {
     /**
      * Constructs the Gameboard
      */
-    constructor() {
-        super({});
+    constructor(props: object) {
+        super(props);
 
         this.state = {
             move: 1,
@@ -21,19 +21,11 @@ export class GameBoard extends React.Component<{}, State> {
      */
     public render(): React.ReactElement {
 
-        const divisionStyle = {
+        const outer: CSSProperties = {
             display: "flex",
             flexDirection: "row",
-            flexGrow: 1,
-            flex: 1,
-        } as CSSProperties;
-
-        const columnStyle = {
-            display: "flex",
-            flexDirection: "row",
-            flexGrow: 1,
-            flex: 1,
-        } as CSSProperties;
+            justifyContent: "center",
+        };
 
         const gameboardStyle: CSSProperties = {
             height: "100%",
@@ -43,25 +35,31 @@ export class GameBoard extends React.Component<{}, State> {
             width: "250px",
         };
 
+        const doneButtonStyle: CSSProperties = {
+            borderRadius: "40%",
+            width: "90%",
+            backgroundColor: "gray",
+            border: 5,
+            margin: 5,
+        };
+
         const gameRows = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
         return (
-            <div style={divisionStyle} >
-                <div style={columnStyle}></div>
+            <div style={outer}>
                 <div style={gameboardStyle}>
-                    <div style={{ display: "flex" }}>
-                        {
-                            gameRows.map((row, index) => <PinRow key={index} row={row} readonly={false} current={this.state.move === row} hintColors={[]} />)
-                        }
-                        <button style={{ borderRadius: "40%", margin: 5, width: "100%", backgroundColor: "gray", border: 0 }} onClick={this.onMoveDone}>Done!</button>
+                    {
+                        gameRows.map((row, index) => <PinRow key={index} row={row} readonly={false} current={this.state.move === row} hintColors={[]} />)
+                    }
+                    <div style={outer}>
+                        <button style={doneButtonStyle} onClick={this.onMoveDone}>Done!</button>
                     </div>
                 </div>
-                <div style={columnStyle}></div>
             </div>
         );
     }
 
-    private onMoveDone() {
+    private onMoveDone(): void {
         this.setState({ move: this.state.move + 1 });
     }
 }

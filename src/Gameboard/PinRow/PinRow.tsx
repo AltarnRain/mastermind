@@ -26,16 +26,37 @@ export class PinRow extends React.Component<Properties, State> {
 
     public render(): React.ReactNode {
 
-        const style: CSSProperties = {
-            flexDirection: "column"
+        const colorPinStyle: CSSProperties = {
+            flexDirection: "row",
+            display: "flex"
+        };
+
+        const hintBoxStyle: CSSProperties = {
+            display: "flex",
+            justifyContent: "right"
+        };
+
+        const hintSquareBaseStyle: CSSProperties = {
+            width: "15px",
+            height: "15px",
+            marginLeft: 5,
+            marginRight: 5,
+            marginTop: 11,
         };
 
         return (
-            <div style={style}>
+            <div style={colorPinStyle}>
                 <ColorPin onChange={this.onChange} pinNumber={1} color={this.state.pin1Color} />
                 <ColorPin onChange={this.onChange} pinNumber={2} color={this.state.pin2Color} />
                 <ColorPin onChange={this.onChange} pinNumber={3} color={this.state.pin3Color} />
                 <ColorPin onChange={this.onChange} pinNumber={4} color={this.state.pin4Color} />
+
+                <div style={hintBoxStyle}>
+                    <div style={{...hintSquareBaseStyle, backgroundColor: "black"}} />
+                    <div style={{...hintSquareBaseStyle, backgroundColor: "black"}} />
+                    <div style={{...hintSquareBaseStyle, backgroundColor: "black"}} />
+                    <div style={{...hintSquareBaseStyle, backgroundColor: "black"}} />
+                </div>
             </div>
         );
     }

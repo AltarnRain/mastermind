@@ -5,7 +5,7 @@
         "interface-name": false,
         "max-line-length": false,
         "object-literal-sort-keys": false,
-        "trailing-comma": false
-
+        "trailing-comma": false,
+        "prefer-for-of": false
     }
 }

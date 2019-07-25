@@ -12,7 +12,7 @@ export class Main extends React.Component {
     };
 
     return (
-      <div>
+      <div id="portal" >
         <p style={titleStyle}>Welcome to MasterMind</p>
         <GameBoard />
       </div>

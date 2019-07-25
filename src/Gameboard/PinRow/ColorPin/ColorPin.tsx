@@ -29,7 +29,7 @@ export class ColorPin extends React.Component<Properties> {
             <button onClick={this.onClick} style={colorPinStyle}></button>
         );
     }
-    private onClick(event: React.SyntheticEvent) {
+    private onClick() {
         if (this.props.onPinClick) {
             this.props.onPinClick(this.props.pinNumber);
         }

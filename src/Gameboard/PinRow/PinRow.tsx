@@ -54,7 +54,7 @@ export class PinRow extends React.Component<Properties> {
     }
 
     private onClick(pinNumber: number): void {
-        if (!this.props.readonly && this.props.onPinClick) {
+        if (this.props.current && this.props.onPinClick) {
             this.props.onPinClick(pinNumber);
         }
     }

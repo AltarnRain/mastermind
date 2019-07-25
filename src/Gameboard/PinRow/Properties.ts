@@ -1,8 +1,6 @@
 import { Colors } from "../../Types/Colors";
 
 export interface Properties {
-    readonly: boolean;
-
     current: boolean;
 
     pinColors: Colors[];

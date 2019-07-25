@@ -65,7 +65,6 @@ export class GameBoard extends React.Component<{}, State> {
                     {
                         this.state.gameRows.map((row, index) => <PinRow
                             key={index}
-                            readonly={false}
                             current={this.state.move === index + 1}
                             pinColors={row.pinColors}
                             hintColors={row.hintColors} />)

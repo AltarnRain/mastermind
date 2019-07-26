@@ -1,5 +1,5 @@
 import React, { CSSProperties } from "react";
-import { Colors } from "../Types/Colors";
+import { allColors, Colors } from "../Types/Colors";
 import { PinRow } from "./PinRow/PinRow";
 import { State } from "./State";
 
@@ -12,6 +12,12 @@ export class GameBoard extends React.Component<{}, State> {
         super(props);
 
         const allBlack: Colors[] = ["black", "black", "black", "black"];
+
+        const hiddenColors: Colors[] = [];
+        for (let i = 0; i < 4; i++) {
+            const random = Math.floor(Math.random() * 4);
+            hiddenColors.push(allColors[random]);
+        }
 
         this.state = {
             currentRow: 0,
@@ -26,7 +32,8 @@ export class GameBoard extends React.Component<{}, State> {
                 { hintColors: [...allBlack], pinColors: [...allBlack] },
                 { hintColors: [...allBlack], pinColors: [...allBlack] },
                 { hintColors: [...allBlack], pinColors: [...allBlack] },
-            ]
+            ],
+            hiddenColors
         };
 
         this.onMoveDone = this.onMoveDone.bind(this);
@@ -91,7 +98,7 @@ export class GameBoard extends React.Component<{}, State> {
         const gameRows = this.cloneGameRows();
         gameRows[row].pinColors[pinNumber] = color;
 
-        this.setState({gameRows});
+        this.setState({ gameRows });
     }
 
     private cloneGameRows() {

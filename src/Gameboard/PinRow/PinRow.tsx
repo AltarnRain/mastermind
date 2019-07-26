@@ -1,9 +1,14 @@
-
 import React, { CSSProperties } from "react";
+import { Colors } from "../../Types/Colors";
+import { Modal } from "../Model/Model";
+import { SelectColor } from "../SelectColor/SelectColor";
 import { ColorPin } from "./ColorPin/ColorPin";
 import { Properties } from "./Properties";
+import { State } from "./State";
 
-export class PinRow extends React.Component<Properties> {
+export class PinRow extends React.Component<Properties, State> {
+
+    private rowRef = React.createRef<HTMLDivElement>();
 
     /**
      * Contructor
@@ -12,7 +17,12 @@ export class PinRow extends React.Component<Properties> {
     constructor(props: Properties) {
         super(props);
 
-        this.onClick = this.onClick.bind(this);
+        this.state = {
+            showPinPicker: false,
+        };
+
+        this.onPinClick = this.onPinClick.bind(this);
+        this.onPickColor = this.onPickColor.bind(this);
     }
 
     public render(): React.ReactNode {
@@ -37,25 +47,37 @@ export class PinRow extends React.Component<Properties> {
         };
 
         return (
-            <div style={colorPinStyle}>
-                <ColorPin onPinClick={this.onClick} pinNumber={1} color={this.props.pinColors[0]} />
-                <ColorPin onPinClick={this.onClick} pinNumber={2} color={this.props.pinColors[1]} />
-                <ColorPin onPinClick={this.onClick} pinNumber={3} color={this.props.pinColors[2]} />
-                <ColorPin onPinClick={this.onClick} pinNumber={4} color={this.props.pinColors[3]} />
+            <div style={colorPinStyle} ref={this.rowRef} >
+                {
+                    this.props.pinColors.map((color, index) => <ColorPin key={index} pinNumber={index} color={color} onPinClick={this.onPinClick} />)
+                }
+                {
+                     this.state.showPinPicker ?
+                     <Modal element={this.rowRef}>
+                         <SelectColor onPickColor={this.onPickColor} />
+                     </Modal>
+                     : null
+                }
 
                 <div style={hintBoxStyle}>
-                    <div style={{ ...hintSquareBaseStyle, backgroundColor: this.props.hintColors[0] }} />
-                    <div style={{ ...hintSquareBaseStyle, backgroundColor: this.props.hintColors[1] }} />
-                    <div style={{ ...hintSquareBaseStyle, backgroundColor: this.props.hintColors[2] }} />
-                    <div style={{ ...hintSquareBaseStyle, backgroundColor: this.props.hintColors[3] }} />
+                    {
+                        this.props.hintColors.map((color, index) => <div key={index} style={{ ...hintSquareBaseStyle, backgroundColor: color }} />)
+                    }
                 </div>
             </div>
         );
     }
 
-    private onClick(pinNumber: number): void {
-        if (this.props.current && this.props.onPinClick) {
-            this.props.onPinClick(pinNumber);
+    private onPinClick(pinNumber: number): void {
+        if (this.props.current && this.props.onSetColor) {
+            this.setState({showPinPicker: true, currentPintNumber: pinNumber});
+        }
+    }
+
+    private onPickColor(color: Colors): void {
+        if (this.props.current && this.props.onSetColor && typeof(this.state.currentPintNumber) === "number") {
+            this.setState({showPinPicker: false});
+            this.props.onSetColor(this.props.row, this.state.currentPintNumber, color);
         }
     }
 }

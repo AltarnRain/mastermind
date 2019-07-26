@@ -8,5 +8,7 @@ export interface Properties {
 
     pinNumber: number;
 
-    onPinClick?(pinNumber: number, color?: Colors): void;
+    onPinClick?(pinNumber: number): void;
+
+    onPickColor?(color: Colors): void;
 }

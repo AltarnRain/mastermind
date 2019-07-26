@@ -2,10 +2,6 @@ import React, { CSSProperties } from "react";
 import { Properties } from "./Properties";
 
 export class ColorPin extends React.Component<Properties> {
-
-    /**
-     *
-     */
     constructor(props: Properties) {
         super(props);
 
@@ -31,7 +27,11 @@ export class ColorPin extends React.Component<Properties> {
     }
     private onClick() {
         if (this.props.onPinClick) {
-            this.props.onPinClick(this.props.pinNumber, this.props.color);
+            this.props.onPinClick(this.props.pinNumber);
+        }
+
+        if (this.props.onPickColor) {
+            this.props.onPickColor(this.props.color);
         }
     }
 }

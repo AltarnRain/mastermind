@@ -7,5 +7,7 @@ export interface Properties {
 
     hintColors: Colors[];
 
-    onPinClick?(pinNumber: number): void;
+    row: number;
+
+    onSetColor?(row: number, pinNumber: number, color: Colors): void;
 }

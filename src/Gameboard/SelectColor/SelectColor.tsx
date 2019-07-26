@@ -1,31 +1,34 @@
-import React from "react";
-import { Colors } from "../../Types/Colors";
+import React, { CSSProperties } from "react";
+import { allColors, Colors } from "../../Types/Colors";
 import { ColorPin } from "../PinRow/ColorPin/ColorPin";
 import { Properties } from "./Properties";
 
 export class SelectColor extends React.Component<Properties> {
 
-    /**
-     *
-     */
     constructor(props: Properties) {
         super(props);
+
+        this.onPickColor = this.onPickColor.bind(this);
     }
 
     public render(): React.ReactElement {
 
+        const selectColorStyle: CSSProperties = {
+            display: "flex",
+            flexDirection : "row",
+            backgroundColor: "white",
+        };
+
         return (
-            <div>
-                <ColorPin pinNumber={1} color="black" onPinClick={this.onPickColor} />
-                <ColorPin pinNumber={2} color="blue" />
-                <ColorPin pinNumber={3} color="red" />
-                <ColorPin pinNumber={4} color="white" />
-                <ColorPin pinNumber={5} color="yellow" />
+            <div style={selectColorStyle} >
+                {
+                    allColors.map((color, index) => <ColorPin key={index} pinNumber={index} color={color} onPickColor={this.onPickColor} />)
+                }
             </div>
         );
     }
 
-    private onPickColor(pinNumber: number, color: Colors): void {
+    private onPickColor(color: Colors): void {
         if (this.props.onPickColor) {
             this.props.onPickColor(color);
         }

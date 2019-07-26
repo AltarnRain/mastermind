@@ -1,13 +1,9 @@
-import React, { CSSProperties, RefObject } from "react";
-import reactDom from "react-dom";
+import React, { CSSProperties } from "react";
 import { Colors } from "../Types/Colors";
 import { PinRow } from "./PinRow/PinRow";
-import { SelectColor } from "./SelectColor/SelectColor";
 import { State } from "./State";
 
 export class GameBoard extends React.Component<{}, State> {
-
-    private pinRowRefs: Array<RefObject<HTMLDivElement>> = [];
 
     /**
      * Constructs the Gameboard
@@ -33,12 +29,8 @@ export class GameBoard extends React.Component<{}, State> {
             ]
         };
 
-        for (let i = 0; i < this.state.gameRows.length; i++) {
-            this.pinRowRefs.push(React.createRef());
-        }
-
         this.onMoveDone = this.onMoveDone.bind(this);
-        this.onPinClick = this.onPinClick.bind(this);
+        this.onSetColor = this.onSetColor.bind(this);
     }
 
     /**
@@ -73,14 +65,15 @@ export class GameBoard extends React.Component<{}, State> {
                 <div style={gameboardStyle}>
                     {
                         this.state.gameRows.map((row, index) =>
-                            <div ref={this.pinRowRefs[index]} >
-                                <PinRow
-                                    key={index}
-                                    current={this.state.currentRow === index}
-                                    pinColors={row.pinColors}
-                                    hintColors={row.hintColors}
-                                    onPinClick={this.onPinClick} />
-                            </div>)
+
+                            <PinRow
+                                key={index}
+                                current={this.state.currentRow === index}
+                                row={index}
+                                pinColors={row.pinColors}
+                                hintColors={row.hintColors}
+                                onSetColor={this.onSetColor} />
+                        )
                     }
                     <div style={outer}>
                         <button style={doneButtonStyle} onClick={this.onMoveDone}>Done!</button>
@@ -94,17 +87,19 @@ export class GameBoard extends React.Component<{}, State> {
         this.setState({ currentRow: this.state.currentRow + 1 });
     }
 
-    private onPinClick(pinNumber: number): void {
+    private onSetColor(row: number, pinNumber: number, color: Colors): void {
+        const gameRows = this.cloneGameRows();
+        gameRows[row].pinColors[pinNumber] = color;
 
-        const currentRef = this.pinRowRefs[this.state.currentRow];
-
-        if (currentRef.current) {
-            reactDom.createPortal(<SelectColor onPickColor={this.onPickColor} />, currentRef.current);
-
-        }
+        this.setState({gameRows});
     }
 
-    private onPickColor(color: Colors): void {
-
+    private cloneGameRows() {
+        const gameRows = [...this.state.gameRows];
+        for (let i = 0; i < gameRows.length; i++) {
+            gameRows[i].pinColors = [...this.state.gameRows[i].pinColors];
+            gameRows[i].hintColors = [...this.state.gameRows[i].hintColors];
+        }
+        return gameRows;
     }
 }

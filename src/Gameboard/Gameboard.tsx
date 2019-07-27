@@ -14,6 +14,7 @@ export class GameBoard extends React.Component<{}, State> {
         const allBlack: Colors[] = ["black", "black", "black", "black"];
 
         const hiddenColors: Colors[] = [];
+
         for (let i = 0; i < 4; i++) {
             const random = Math.floor(Math.random() * 4);
             hiddenColors.push(allColors[random]);

@@ -1,10 +1,10 @@
 import React, { CSSProperties } from "react";
-import { Colors } from "../../Types/Colors";
-import { Modal } from "../Model/Model";
-import { SelectColor } from "../SelectColor/SelectColor";
-import { ColorPin } from "./ColorPin/ColorPin";
+import { Colors } from "../Types/Colors";
 import { Properties } from "./Properties";
 import { State } from "./State";
+import { ColorPin } from "../ColorPin/ColorPin";
+import { Modal } from "../Model/Model";
+import { SelectColor } from "../SelectColor/SelectColor";
 
 export class PinRow extends React.Component<Properties, State> {
 
@@ -68,16 +68,24 @@ export class PinRow extends React.Component<Properties, State> {
         );
     }
 
+    /**
+     * An event fired when the user clicks on a pin in a pin row. Used to set the color of a pin.
+     * @param {number} pinNumber. The location of a pin in a row.
+     */
     private onPinClick(pinNumber: number): void {
         if (this.props.current && this.props.onSetColor) {
-            this.setState({showPinPicker: true, currentPintNumber: pinNumber});
+            this.setState({showPinPicker: true, currentPinNumber: pinNumber});
         }
     }
 
+    /**
+     * Used to select a color for a pin.
+     * @param {Colors} color. Preset colors.
+     */
     private onPickColor(color: Colors): void {
-        if (this.props.current && this.props.onSetColor && typeof(this.state.currentPintNumber) === "number") {
+        if (this.props.current && this.props.onSetColor && typeof(this.state.currentPinNumber) === "number") {
             this.setState({showPinPicker: false});
-            this.props.onSetColor(this.props.row, this.state.currentPintNumber, color);
+            this.props.onSetColor(this.props.row, this.state.currentPinNumber, color);
         }
     }
 }

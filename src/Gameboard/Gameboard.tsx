@@ -1,6 +1,11 @@
+/**
+ * Gameboard component. This is where the action happens.
+ */
+
 import React, { CSSProperties } from "react";
+import { PinRow } from "../PinRow/PinRow";
 import { allColors, Colors } from "../Types/Colors";
-import { PinRow } from "./PinRow/PinRow";
+import { GameRow } from "./GameRow";
 import { State } from "./State";
 
 export class GameBoard extends React.Component<{}, State> {
@@ -11,8 +16,6 @@ export class GameBoard extends React.Component<{}, State> {
     constructor(props: object) {
         super(props);
 
-        const allBlack: Colors[] = ["black", "black", "black", "black"];
-
         const hiddenColors: Colors[] = [];
 
         for (let i = 0; i < 4; i++) {
@@ -20,20 +23,14 @@ export class GameBoard extends React.Component<{}, State> {
             hiddenColors.push(allColors[random]);
         }
 
+        const gameRows: GameRow[] = []; 
+        for (let i = 0; i < 10; i++) {
+            gameRows.push({hintColors: ["black", "black", "black", "black"], pinColors: ["black", "black", "black", "black"]});
+        }
+
         this.state = {
             currentRow: 0,
-            gameRows: [
-                { hintColors: [...allBlack], pinColors: [...allBlack] },
-                { hintColors: [...allBlack], pinColors: [...allBlack] },
-                { hintColors: [...allBlack], pinColors: [...allBlack] },
-                { hintColors: [...allBlack], pinColors: [...allBlack] },
-                { hintColors: [...allBlack], pinColors: [...allBlack] },
-                { hintColors: [...allBlack], pinColors: [...allBlack] },
-                { hintColors: [...allBlack], pinColors: [...allBlack] },
-                { hintColors: [...allBlack], pinColors: [...allBlack] },
-                { hintColors: [...allBlack], pinColors: [...allBlack] },
-                { hintColors: [...allBlack], pinColors: [...allBlack] },
-            ],
+            gameRows,
             hiddenColors
         };
 
@@ -91,10 +88,19 @@ export class GameBoard extends React.Component<{}, State> {
         );
     }
 
+    /**
+     * Event handler for when the player click the "Done" button. This moves the game to the next row.
+     */
     private onMoveDone(): void {
         this.setState({ currentRow: this.state.currentRow + 1 });
     }
 
+    /**
+     * Event handler for setting the color of a pin in a row.
+     * @param {number} row. The row of the pin,
+     * @param {number} pinNumber. Pin number in the row.
+     * @param {Colors} color. The color the pin will get.
+     */
     private onSetColor(row: number, pinNumber: number, color: Colors): void {
         const gameRows = this.cloneGameRows();
         gameRows[row].pinColors[pinNumber] = color;
@@ -102,6 +108,9 @@ export class GameBoard extends React.Component<{}, State> {
         this.setState({ gameRows });
     }
 
+    /**
+     * Creates a new array of game rows and hint colors so we don't have to update the state directly.
+     */
     private cloneGameRows() {
         const gameRows = [...this.state.gameRows];
         for (let i = 0; i < gameRows.length; i++) {

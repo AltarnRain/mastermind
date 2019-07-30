@@ -1,16 +1,27 @@
+/**
+ * This component is a pop-up that allows the player to select a color for a clicked pin.
+ */
+
 import React, { CSSProperties } from "react";
-import { allColors, Colors } from "../../Types/Colors";
-import { ColorPin } from "../PinRow/ColorPin/ColorPin";
+import { allColors, Colors } from "../Types/Colors";
+import { ColorPin } from "../ColorPin/ColorPin";
 import { Properties } from "./Properties";
 
 export class SelectColor extends React.Component<Properties> {
 
+    /**
+     * Constructs the component
+     * @param {Properties} props.
+     */
     constructor(props: Properties) {
         super(props);
 
         this.onPickColor = this.onPickColor.bind(this);
     }
 
+    /**
+     * Renders the component
+     */
     public render(): React.ReactElement {
 
         const selectColorStyle: CSSProperties = {

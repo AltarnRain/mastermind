@@ -1,13 +1,25 @@
+/**
+ * This component represents a single pin in the game board.
+ */
+
 import React, { CSSProperties } from "react";
 import { Properties } from "./Properties";
 
 export class ColorPin extends React.Component<Properties> {
+
+    /**
+     * Constructs the component.
+     * @param {Properties} props.
+     */
     constructor(props: Properties) {
         super(props);
 
         this.onClick = this.onClick.bind(this);
     }
 
+    /**
+     * Renders the component.
+     */
     public render(): React.ReactNode {
 
         const colorPinStyle: CSSProperties = {
@@ -25,7 +37,11 @@ export class ColorPin extends React.Component<Properties> {
             <button onClick={this.onClick} style={colorPinStyle}></button>
         );
     }
-    private onClick() {
+
+    /**
+     * Handlers the click on a pin.
+     */
+    private onClick(): void {
         if (this.props.onPinClick) {
             this.props.onPinClick(this.props.pinNumber);
         }

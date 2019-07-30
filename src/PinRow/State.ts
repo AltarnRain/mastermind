@@ -5,5 +5,5 @@
 export interface State {
     showPinPicker: boolean;
 
-    currentPintNumber?: number;
+    currentPinNumber?: number;
 }

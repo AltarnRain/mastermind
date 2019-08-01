@@ -19,8 +19,8 @@ export class Main extends React.Component {
     };
 
     return (
-      <div> 
-        <p style={titleStyle}>Welcome to MasterMind</p>
+      <div>
+        <p style={titleStyle}>Mastermind</p>
         <GameBoard />
       </div>
     );

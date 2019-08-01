@@ -17,16 +17,11 @@ export class GameBoard extends React.Component<{}, State> {
     constructor(props: object) {
         super(props);
 
-        this.state = {
-            currentRow: 0,
-            gameRows: this.getGameEmptyRows(),
-            codeColors: this.getCode(),
-            gameLost: false,
-            gameWon: false,
-        };
+        this.state = this.getInitialState();
 
         this.onMoveDone = this.onMoveDone.bind(this);
         this.onSetColor = this.onSetColor.bind(this);
+        this.onResetBoard = this.onResetBoard.bind(this);
     }
 
     /**
@@ -56,25 +51,46 @@ export class GameBoard extends React.Component<{}, State> {
             margin: 5,
         };
 
+        const titleStyle: CSSProperties = {
+            fontSize: 28,
+            marginBottom: 10,
+            textAlign: "center",
+        };
+
         return (
             <div style={outer}>
-                <div style={gameboardStyle}>
-                    {
-                        this.state.gameRows.map((row, index) =>
+                {
+                    this.state.gameLost ?
+                        <div style={titleStyle}>
+                            <p>You lost the game. The code was...</p>
+                            <PinRow pinColors={this.state.codeColors}/>
+                            <button onClick={this.onResetBoard}>Play again?</button>
+                        </div>
+                        :
+                        this.state.gameWon ?
+                            <div style={titleStyle}>
+                                <p>You won the game</p>
+                                <button onClick={this.onResetBoard}>Play again?</button>
+                            </div>
+                            :
+                            <div style={gameboardStyle}>
+                                {
+                                    this.state.gameRows.map((row, index) =>
 
-                            <PinRow
-                                key={index}
-                                current={this.state.currentRow === index}
-                                row={index}
-                                pinColors={row.pinColors}
-                                hintColors={row.hintColors}
-                                onSetColor={this.onSetColor} />
-                        )
-                    }
-                    <div style={outer}>
-                        <button style={doneButtonStyle} onClick={this.onMoveDone}>Done!</button>
-                    </div>
-                </div>
+                                        <PinRow
+                                            key={index}
+                                            current={this.state.currentRow === index}
+                                            row={index}
+                                            pinColors={row.pinColors}
+                                            hintColors={row.hintColors}
+                                            onSetColor={this.onSetColor} />
+                                    )
+                                }
+                                <div style={outer}>
+                                    <button style={doneButtonStyle} onClick={this.onMoveDone}>Done!</button>
+                                </div>
+                            </div>
+                }
             </div>
         );
     }
@@ -114,6 +130,10 @@ export class GameBoard extends React.Component<{}, State> {
      * Event handler for when the player click the "Done" button. This moves the game to the next row.
      */
     private onMoveDone(): void {
+
+        if (this.state.gameWon || this.state.gameLost) {
+            return;
+        }
 
         // Clone the current board so to work immutable.
         const newBoardState = this.cloneGameRows();
@@ -165,11 +185,13 @@ export class GameBoard extends React.Component<{}, State> {
         }
 
         if (rightColorRightPosition === 4) {
-            this.setState({gameWon: true});
+            this.setState({ gameWon: true });
+            return;
         }
 
-        if (this.state.currentRow === 12 && rightColorRightPosition !== 4) {
-            this.setState({gameLost: true});
+        if (this.state.currentRow === 11 && rightColorRightPosition !== 4) {
+            this.setState({ gameLost: true });
+            return;
         }
 
         const hintColors: HintColors[] = [];
@@ -217,6 +239,26 @@ export class GameBoard extends React.Component<{}, State> {
         gameRows[row].pinColors[pinNumber] = color;
 
         this.setState({ gameRows });
+    }
+
+    /**
+     * Resets the game board.
+     */
+    private onResetBoard(): void {
+        this.setState(this.getInitialState);
+    }
+
+    /**
+     * Gets the initial state of the game.
+     */
+    private getInitialState(): State {
+        return {
+            currentRow: 0,
+            gameRows: this.getGameEmptyRows(),
+            codeColors: this.getCode(),
+            gameLost: false,
+            gameWon: false,
+        };
     }
 
     /**

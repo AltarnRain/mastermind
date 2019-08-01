@@ -10,7 +10,7 @@ export interface Properties {
     /**
      * True if this row is the current row.
      */
-    current: boolean;
+    current?: boolean;
 
     /**
      * The colors of this row.
@@ -20,12 +20,12 @@ export interface Properties {
     /**
      * The hint colors of this row.
      */
-    hintColors: HintColors[];
+    hintColors?: HintColors[];
 
     /**
      * This row's nunmber
      */
-    row: number;
+    row?: number;
 
     /**
      * Event handler for setting a color for a pin.

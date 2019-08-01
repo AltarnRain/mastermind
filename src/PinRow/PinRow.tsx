@@ -1,10 +1,10 @@
 import React, { CSSProperties } from "react";
-import { PinColors } from "../Types/PinColors";
-import { Properties } from "./Properties";
-import { State } from "./State";
 import { ColorPin } from "../ColorPin/ColorPin";
 import { Modal } from "../Model/Model";
 import { SelectColor } from "../SelectColor/SelectColor";
+import { PinColors } from "../Types/PinColors";
+import { Properties } from "./Properties";
+import { State } from "./State";
 
 export class PinRow extends React.Component<Properties, State> {
 
@@ -30,7 +30,7 @@ export class PinRow extends React.Component<Properties, State> {
         const colorPinStyle: CSSProperties = {
             flexDirection: "row",
             display: "flex",
-            backgroundColor: this.props.current ? "blue" : "brown"
+            backgroundColor: typeof(this.props.current) !== "undefined" ? this.props.current ? "blue" : "brown" : undefined
         };
 
         const hintBoxStyle: CSSProperties = {
@@ -52,16 +52,18 @@ export class PinRow extends React.Component<Properties, State> {
                     this.props.pinColors.map((color, index) => <ColorPin key={index} pinNumber={index} color={color} onPinClick={this.onPinClick} />)
                 }
                 {
-                     this.state.showPinPicker ?
-                     <Modal element={this.rowRef}>
-                         <SelectColor onPickColor={this.onPickColor} />
-                     </Modal>
-                     : null
+                    this.state.showPinPicker ?
+                        <Modal element={this.rowRef}>
+                            <SelectColor onPickColor={this.onPickColor} />
+                        </Modal>
+                        : null
                 }
 
                 <div style={hintBoxStyle}>
                     {
-                        this.props.hintColors.map((color, index) => <div key={index} style={{ ...hintSquareBaseStyle, backgroundColor: color }} />)
+                        typeof (this.props.hintColors) !== "undefined" ?
+                            this.props.hintColors.map((color, index) => <div key={index} style={{ ...hintSquareBaseStyle, backgroundColor: color }} />)
+                            : null
                     }
                 </div>
             </div>
@@ -74,7 +76,7 @@ export class PinRow extends React.Component<Properties, State> {
      */
     private onPinClick(pinNumber: number): void {
         if (this.props.current && this.props.onSetColor) {
-            this.setState({showPinPicker: true, currentPinNumber: pinNumber});
+            this.setState({ showPinPicker: true, currentPinNumber: pinNumber });
         }
     }
 
@@ -83,9 +85,12 @@ export class PinRow extends React.Component<Properties, State> {
      * @param {PinColors} color. Preset colors.
      */
     private onPickColor(color: PinColors): void {
-        if (this.props.current && this.props.onSetColor && typeof(this.state.currentPinNumber) === "number") {
-            this.setState({showPinPicker: false});
-            this.props.onSetColor(this.props.row, this.state.currentPinNumber, color);
+        if (this.props.current && this.props.onSetColor && typeof (this.state.currentPinNumber) === "number") {
+            this.setState({ showPinPicker: false });
+
+            if (typeof (this.props.row) !== "undefined") {
+                this.props.onSetColor(this.props.row, this.state.currentPinNumber, color);
+            }
         }
     }
 }

@@ -1,0 +1,1 @@
+export type HintColors = "white" | "red" | "black";

@@ -2,15 +2,16 @@
  * Represents a row on the game boards
  */
 
-import { Colors } from "../Types/Colors";
+import { HintColors } from "../Types/HintColors";
+import { PinColors } from "../Types/PinColors";
 export interface GameRow {
     /**
      * The colors of each pin in the game row.
      */
-    pinColors: Colors[];
+    pinColors: PinColors[];
 
     /**
      * The colors of each hint box.
      */
-    hintColors: Colors[];
+    hintColors: HintColors[];
 }

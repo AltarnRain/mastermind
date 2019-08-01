@@ -1,9 +1,16 @@
+/**
+ * Main app. The game board is launched from here.
+ */
+
 import React, { CSSProperties } from "react";
 import "./App.css";
 import { GameBoard } from "./Gameboard/Gameboard";
 
 export class Main extends React.Component {
 
+  /**
+   * Render the component.
+   */
   public render(): React.ReactElement {
     const titleStyle: CSSProperties = {
       fontSize: 28,
@@ -12,7 +19,7 @@ export class Main extends React.Component {
     };
 
     return (
-      <div>
+      <div> 
         <p style={titleStyle}>Welcome to MasterMind</p>
         <GameBoard />
       </div>

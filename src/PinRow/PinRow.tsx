@@ -1,5 +1,5 @@
 import React, { CSSProperties } from "react";
-import { Colors } from "../Types/Colors";
+import { PinColors } from "../Types/PinColors";
 import { Properties } from "./Properties";
 import { State } from "./State";
 import { ColorPin } from "../ColorPin/ColorPin";
@@ -80,9 +80,9 @@ export class PinRow extends React.Component<Properties, State> {
 
     /**
      * Used to select a color for a pin.
-     * @param {Colors} color. Preset colors.
+     * @param {PinColors} color. Preset colors.
      */
-    private onPickColor(color: Colors): void {
+    private onPickColor(color: PinColors): void {
         if (this.props.current && this.props.onSetColor && typeof(this.state.currentPinNumber) === "number") {
             this.setState({showPinPicker: false});
             this.props.onSetColor(this.props.row, this.state.currentPinNumber, color);

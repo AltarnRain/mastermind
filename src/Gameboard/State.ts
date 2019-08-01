@@ -1,4 +1,4 @@
-import { Colors } from "../Types/Colors";
+import { PinColors } from "../Types/PinColors";
 import { GameRow } from "./GameRow";
 
 /**
@@ -20,5 +20,15 @@ export interface State {
     /**
      * Colors of the hint boxes.
      */
-    hiddenColors: Colors[];
+    codeColors: PinColors[];
+
+    /**
+     * When true the player won the game.
+     */
+    gameWon: boolean;
+
+    /**
+     * When true, the player lost the game.
+     */
+    gameLost: boolean;
 }

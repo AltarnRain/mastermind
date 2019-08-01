@@ -2,14 +2,14 @@
  * Color pin properties
  */
 
-import { Colors } from "../Types/Colors";
+import { PinColors } from "../Types/PinColors";
 
 export interface Properties {
 
     /**
      * The color of the pin.
      */
-    color: Colors;
+    color: PinColors;
 
     /**
      * The pinNumber. This is the locartion of this pin in a row or when selecting a color for a pin.
@@ -24,7 +24,7 @@ export interface Properties {
 
     /**
      * An event fired when the user selects a color of a pin.
-     * @param {Colors} color. One of the defined colors for the game.
+     * @param {PinColors} color. One of the defined colors for the game.
      */
-    onPickColor?(color: Colors): void;
+    onPickColor?(color: PinColors): void;
 }

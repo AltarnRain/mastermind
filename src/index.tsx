@@ -4,7 +4,8 @@
 
 import React from "react";
 import ReactDOM from "react-dom";
-import { Main } from "./Main";
+import "./App.css";
+import { Main } from "./Main/Main";
 import * as serviceWorker from "./serviceWorker";
 
 // Render the main application on the DOM.

@@ -207,8 +207,6 @@ export class GameBoard extends React.Component<{}, State> {
 
         const remainingSlots = 4 - (rightColorRightPosition + rightColorWrongPosition);
 
-        // Loop ten times and swam two random elements in the hintColor array.
-        // This will make life harder for the player and it is permitted by the rules of Mastermind.
         const hintColors = [...this.randomizeArray(rightColorRightPositionColors), ...this.randomizeArray(rightColorWrongPositionColors)];
 
         for (let i = 0; i < remainingSlots; i++) {
@@ -223,13 +221,17 @@ export class GameBoard extends React.Component<{}, State> {
     private randomizeArray(hintColorArray: HintColors[]): HintColors[] {
 
         const newArray = [...hintColorArray];
+
         for (let i = 0; i < 10; i++) {
             const pos1 = Math.floor(Math.random() * 4);
             const pos2 = Math.floor(Math.random() * 4);
             const pos1Color = newArray[pos1];
             const pos2Color = newArray[pos2];
-            newArray[pos1] = pos2Color;
-            newArray[pos2] = pos1Color;
+
+            if (typeof(pos1Color) !== "undefined" && typeof(pos2Color) !== "undefined") {
+                newArray[pos1] = pos2Color;
+                newArray[pos2] = pos1Color;
+            }
         }
 
         return newArray;

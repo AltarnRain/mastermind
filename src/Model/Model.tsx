@@ -30,10 +30,14 @@ export class Modal extends React.Component<Properties> {
 
         let left = 0;
         let top = 0;
+        let width = 0;
+        let height = 0;
         if (this.props.element.current) {
             const rectangle = this.props.element.current.getBoundingClientRect();
             left = rectangle.left;
             top = rectangle.bottom;
+            width = rectangle.width;
+            height = rectangle.height;
         }
 
         const s: React.CSSProperties = {
@@ -41,6 +45,8 @@ export class Modal extends React.Component<Properties> {
             display: "flex",
             left,
             top,
+            height,
+            width,
             flexDirection: "column",
             boxSizing: "border-box",
         };

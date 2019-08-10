@@ -33,22 +33,24 @@ export class GameBoard extends React.Component<{}, State> {
             display: "flex",
             flexDirection: "row",
             justifyContent: "center",
+            height: "90%",
+            width: "100%"
         };
 
         const gameboardStyle: CSSProperties = {
-            height: "100%",
             backgroundColor: "brown",
             flexShrink: 0,
             flexDirection: "column",
-            width: "250px",
+            width: "50vh"
         };
 
         const doneButtonStyle: CSSProperties = {
             borderRadius: "40%",
             width: "90%",
+            height: "3%",
             backgroundColor: "gray",
-            border: 5,
-            margin: 5,
+            border: "1%",
+            margin: "1%",
         };
 
         const titleStyle: CSSProperties = {
@@ -63,7 +65,7 @@ export class GameBoard extends React.Component<{}, State> {
                     this.state.gameLost ?
                         <div style={titleStyle}>
                             <p>You lost the game. The code was...</p>
-                            <PinRow pinColors={this.state.codeColors}/>
+                            <PinRow pinColors={this.state.codeColors} />
                             <button onClick={this.onResetBoard}>Play again?</button>
                         </div>
                         :
@@ -121,9 +123,7 @@ export class GameBoard extends React.Component<{}, State> {
             codeColors.push(pinColors[random]);
         }
 
-        codeColors.forEach((color) => console.log(color));
-
-        return codeColors;
+        return ["orange", "yellow", "purple", "orange"];
     }
 
     /**
@@ -194,38 +194,45 @@ export class GameBoard extends React.Component<{}, State> {
             return;
         }
 
-        const hintColors: HintColors[] = [];
+        const rightColorRightPositionColors: HintColors[] = [];
+        const rightColorWrongPositionColors: HintColors[] = [];
 
         for (let i = 0; i < rightColorRightPosition; i++) {
-            hintColors.push("red");
+            rightColorRightPositionColors.push("red");
         }
 
         for (let i = 0; i < rightColorWrongPosition; i++) {
-            hintColors.push("white");
+            rightColorWrongPositionColors.push("white");
         }
 
         const remainingSlots = 4 - (rightColorRightPosition + rightColorWrongPosition);
+
+        // Loop ten times and swam two random elements in the hintColor array.
+        // This will make life harder for the player and it is permitted by the rules of Mastermind.
+        const hintColors = [...this.randomizeArray(rightColorRightPositionColors), ...this.randomizeArray(rightColorWrongPositionColors)];
 
         for (let i = 0; i < remainingSlots; i++) {
             hintColors.push("black");
         }
 
-        // Loop ten times and swam two random elements in the hintColor array.
-        // This will make life harder for the player and it is permitted by the rules of Mastermind.
-        for (let i = 0; i < 10; i++) {
-            const pos1 = Math.floor(Math.random() * 4);
-            const pos2 = Math.floor(Math.random() * 4);
-
-            const pos1Color = hintColors[pos1];
-            const pos2Color = hintColors[pos2];
-
-            hintColors[pos1] = pos2Color;
-            hintColors[pos2] = pos1Color;
-        }
-
         currentGameRow.hintColors = hintColors;
 
         this.setState({ currentRow: this.state.currentRow + 1, gameRows: newBoardState });
+    }
+
+    private randomizeArray(hintColorArray: HintColors[]): HintColors[] {
+
+        const newArray = [...hintColorArray];
+        for (let i = 0; i < 10; i++) {
+            const pos1 = Math.floor(Math.random() * 4);
+            const pos2 = Math.floor(Math.random() * 4);
+            const pos1Color = newArray[pos1];
+            const pos2Color = newArray[pos2];
+            newArray[pos1] = pos2Color;
+            newArray[pos2] = pos1Color;
+        }
+
+        return newArray;
     }
 
     /**

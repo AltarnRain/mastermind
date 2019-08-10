@@ -3,8 +3,8 @@
  */
 
 import React, { CSSProperties } from "react";
-import { pinColors, PinColors } from "../Types/PinColors";
 import { ColorPin } from "../ColorPin/ColorPin";
+import { pinColors, PinColors } from "../Types/PinColors";
 import { Properties } from "./Properties";
 
 export class SelectColor extends React.Component<Properties> {
@@ -28,6 +28,7 @@ export class SelectColor extends React.Component<Properties> {
             display: "flex",
             flexDirection : "row",
             backgroundColor: "white",
+            height: "100%"
         };
 
         return (

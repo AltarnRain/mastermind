@@ -30,20 +30,22 @@ export class PinRow extends React.Component<Properties, State> {
         const colorPinStyle: CSSProperties = {
             flexDirection: "row",
             display: "flex",
-            backgroundColor: typeof(this.props.current) !== "undefined" ? this.props.current ? "blue" : "brown" : undefined
+            backgroundColor: typeof (this.props.current) !== "undefined" ? this.props.current ? "blue" : "brown" : undefined,
+            height: "8%",
         };
 
         const hintBoxStyle: CSSProperties = {
             display: "flex",
-            justifyContent: "right"
+            justifyContent: "right",
+            height: "100%",
+            flexGrow: 1,
         };
 
         const hintSquareBaseStyle: CSSProperties = {
-            width: "15px",
-            height: "15px",
-            marginLeft: 5,
-            marginRight: 5,
-            marginTop: 10,
+            width: "80%",
+            height: "65%",
+            marginTop: "6%",
+            marginRight: "2%"
         };
 
         return (

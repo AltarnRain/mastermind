@@ -4,6 +4,7 @@
 
 import { HintColors } from "../Types/HintColors";
 import { PinColors } from "../Types/PinColors";
+
 export interface GameRow {
     /**
      * The colors of each pin in the game row.

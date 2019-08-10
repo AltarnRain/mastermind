@@ -19,7 +19,7 @@ export class Main extends React.Component {
     };
 
     return (
-      <div>
+      <div style={{height: "100vh"}} >
         <p style={titleStyle}>Mastermind</p>
         <GameBoard />
       </div>

@@ -3,6 +3,7 @@
  */
 
 import React, { CSSProperties } from "react";
+import { ColorPin } from "../ColorPin/ColorPin";
 import { PinRow } from "../PinRow/PinRow";
 import { HintColors } from "../Types/HintColors";
 import { pinColors, PinColors } from "../Types/PinColors";
@@ -63,12 +64,18 @@ export class GameBoard extends React.Component<{}, State> {
             <div style={outer}>
                 {
                     this.state.gameLost ?
-                        <div style={titleStyle}>
-                            <p>You lost the game. The code was...</p>
-                            <PinRow pinColors={this.state.codeColors} />
-                            <button onClick={this.onResetBoard}>Play again?</button>
-                        </div>
-                        :
+                        <div>
+                            <div style={titleStyle}>
+                                <p>You lost the game. The code was...</p>
+                            </div>
+                            <button style={{ margin: "5%"}} onClick={this.onResetBoard}>Play again?</button>
+                            <div style={{ display: "flex", flexDirection: "row", justifyContent: "center", width: "50vh", height: "8%" }}>
+                                <ColorPin pinNumber={0} color={this.state.codeColors[0]} />
+                                <ColorPin pinNumber={0} color={this.state.codeColors[1]} />
+                                <ColorPin pinNumber={0} color={this.state.codeColors[2]} />
+                                <ColorPin pinNumber={0} color={this.state.codeColors[3]} />
+                            </div>
+                        </div> :
                         this.state.gameWon ?
                             <div style={titleStyle}>
                                 <p>You won the game</p>
@@ -123,7 +130,7 @@ export class GameBoard extends React.Component<{}, State> {
             codeColors.push(pinColors[random]);
         }
 
-        return ["orange", "yellow", "purple", "orange"];
+        return codeColors;
     }
 
     /**
@@ -228,7 +235,7 @@ export class GameBoard extends React.Component<{}, State> {
             const pos1Color = newArray[pos1];
             const pos2Color = newArray[pos2];
 
-            if (typeof(pos1Color) !== "undefined" && typeof(pos2Color) !== "undefined") {
+            if (typeof (pos1Color) !== "undefined" && typeof (pos2Color) !== "undefined") {
                 newArray[pos1] = pos2Color;
                 newArray[pos2] = pos1Color;
             }

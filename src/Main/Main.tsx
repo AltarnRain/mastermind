@@ -10,8 +10,8 @@ export class Main extends React.Component {
     /**
      * Constructs the main component.
      */
-    constructor() {
-        super({});
+    constructor(props: object) {
+        super(props);
 
         this.state = {
             showGame: false,

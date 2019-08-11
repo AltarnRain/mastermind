@@ -68,7 +68,7 @@ export class GameBoard extends React.Component<{}, State> {
                             <div style={titleStyle}>
                                 <p>You lost the game. The code was...</p>
                             </div>
-                            <button style={{ margin: "5%"}} onClick={this.onResetBoard}>Play again?</button>
+                            <button style={{ margin: "5%" }} onClick={this.onResetBoard}>Play again?</button>
                             <div style={{ display: "flex", flexDirection: "row", justifyContent: "center", width: "50vh", height: "8%" }}>
                                 <ColorPin pinNumber={0} color={this.state.codeColors[0]} />
                                 <ColorPin pinNumber={0} color={this.state.codeColors[1]} />
@@ -96,7 +96,10 @@ export class GameBoard extends React.Component<{}, State> {
                                     )
                                 }
                                 <div style={outer}>
-                                    <button style={doneButtonStyle} onClick={this.onMoveDone}>Done!</button>
+                                    {this.allColorsSet() ?
+                                        <button style={doneButtonStyle} onClick={this.onMoveDone}>Done!</button>
+                                        : null
+                                    }
                                 </div>
                             </div>
                 }
@@ -279,13 +282,18 @@ export class GameBoard extends React.Component<{}, State> {
 
     /**
      * Creates a new array of game rows and hint colors so we don't have to update the state directly.
+     * @returns {GameRow[]}
      */
-    private cloneGameRows() {
+    private cloneGameRows(): GameRow[] {
         const gameRows = [...this.state.gameRows];
         for (let i = 0; i < gameRows.length; i++) {
             gameRows[i].pinColors = [...this.state.gameRows[i].pinColors];
             gameRows[i].hintColors = [...this.state.gameRows[i].hintColors];
         }
         return gameRows;
+    }
+
+    private allColorsSet(): boolean {
+        return this.state.gameRows[this.state.currentRow].pinColors.filter((color) => color === "black").length === 0;
     }
 }

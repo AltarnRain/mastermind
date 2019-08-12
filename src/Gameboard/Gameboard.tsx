@@ -4,6 +4,7 @@
 
 import React, { CSSProperties } from "react";
 import { ColorPin } from "../ColorPin/ColorPin";
+import { HintProvider, randomizeArray } from "../HelperFunctions";
 import { PinRow } from "../PinRow/PinRow";
 import { HintColors } from "../Types/HintColors";
 import { pinColors, PinColors } from "../Types/PinColors";
@@ -151,55 +152,17 @@ export class GameBoard extends React.Component<{}, State> {
         // Get the curerent game row.
         const currentGameRow = newBoardState[this.state.currentRow];
 
-        // This are the colors the player selected.
-        const guessColor = currentGameRow.pinColors;
-
-        // Create a new array with the location of the code colors and the color.
-        let codeColorsToCheck = this.state.codeColors.map((color, index) => {
-            return { index, color };
-        });
-
         // We'll provide two hints as per the rules of Mastermind. The right color in the right position is will be a red hint.
         // The rigth color in the wrong position will be a white pin.
-        let rightColorWrongPosition = 0;
-        let rightColorRightPosition = 0;
 
-        // First check if the player gussed colors in the right position.
-        for (let i = 0; i < currentGameRow.pinColors.length; i++) {
-            const guessedColor = guessColor[i];
-            const codeColor = codeColorsToCheck.filter((c) => c.index === i);
+        const hints = HintProvider(currentGameRow.pinColors, this.state.codeColors);
 
-            if (codeColor.length > 0) {
-                if (guessedColor === codeColor[0].color) {
-                    rightColorRightPosition++;
-
-                    // The hint is done. Remove this element so it is not given as 'Right Color Wrong Position' hint.
-                    codeColorsToCheck = codeColorsToCheck.filter((c) => c.index !== i);
-                }
-            }
-        }
-
-        // Check for any correct colors in the wrong position. Any colors that were in the right position
-        // have been removed from the codeColorsToCheck array.
-        for (let i = 0; i < currentGameRow.pinColors.length; i++) {
-            const guessedColor = guessColor[i];
-            // Not the right position, but this color might be present in the code.
-            const exists = codeColorsToCheck.filter((c) => c.color === guessedColor);
-
-            if (exists.length > 0) {
-                rightColorWrongPosition++;
-
-                // The hint is done. Remove this element from the colors to check array.
-                codeColorsToCheck = codeColorsToCheck.filter((c) => c.index !== exists[0].index);
-            }
-        }
-
-        if (rightColorRightPosition === 4) {
+        if (hints.rightColorRightPosition === 4) {
             this.setState({ gameWon: true });
             return;
         }
 
-        if (this.state.currentRow === 11 && rightColorRightPosition !== 4) {
+        if (this.state.currentRow === 11 && hints.rightColorRightPosition !== 4) {
             this.setState({ gameLost: true });
             return;
         }
@@ -207,17 +170,17 @@ export class GameBoard extends React.Component<{}, State> {
         const rightColorRightPositionColors: HintColors[] = [];
         const rightColorWrongPositionColors: HintColors[] = [];
 
-        for (let i = 0; i < rightColorRightPosition; i++) {
+        for (let i = 0; i < hints.rightColorRightPosition; i++) {
             rightColorRightPositionColors.push("red");
         }
 
-        for (let i = 0; i < rightColorWrongPosition; i++) {
+        for (let i = 0; i < hints.rightColorWrongPosition; i++) {
             rightColorWrongPositionColors.push("white");
         }
 
-        const remainingSlots = 4 - (rightColorRightPosition + rightColorWrongPosition);
+        const remainingSlots = 4 - (hints.rightColorRightPosition + hints.rightColorWrongPosition);
 
-        const hintColors = [...this.randomizeArray(rightColorRightPositionColors), ...this.randomizeArray(rightColorWrongPositionColors)];
+        const hintColors = [...randomizeArray(rightColorRightPositionColors), ...randomizeArray(rightColorWrongPositionColors)];
 
         for (let i = 0; i < remainingSlots; i++) {
             hintColors.push("black");
@@ -226,25 +189,6 @@ export class GameBoard extends React.Component<{}, State> {
         currentGameRow.hintColors = hintColors;
 
         this.setState({ currentRow: this.state.currentRow + 1, gameRows: newBoardState });
-    }
-
-    private randomizeArray(hintColorArray: HintColors[]): HintColors[] {
-
-        const newArray = [...hintColorArray];
-
-        for (let i = 0; i < 10; i++) {
-            const pos1 = Math.floor(Math.random() * 4);
-            const pos2 = Math.floor(Math.random() * 4);
-            const pos1Color = newArray[pos1];
-            const pos2Color = newArray[pos2];
-
-            if (typeof (pos1Color) !== "undefined" && typeof (pos2Color) !== "undefined") {
-                newArray[pos1] = pos2Color;
-                newArray[pos2] = pos1Color;
-            }
-        }
-
-        return newArray;
     }
 
     /**

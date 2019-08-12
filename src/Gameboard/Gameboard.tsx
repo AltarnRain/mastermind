@@ -47,62 +47,91 @@ export class GameBoard extends React.Component<{}, State> {
         };
 
         const doneButtonStyle: CSSProperties = {
+            display: "flex",
             borderRadius: "40%",
-            width: "90%",
+            width: "50%",
             height: "3%",
             backgroundColor: "gray",
             border: "1%",
             margin: "1%",
+            flexDirection: "row"
         };
 
-        const titleStyle: CSSProperties = {
+        const gameEndTextStype: CSSProperties = {
+            display: "flex",
             fontSize: 28,
             marginBottom: 10,
+            marginTop: 50,
             textAlign: "center",
+            height: "100%",
+            flexDirection: "column"
+        };
+
+        const playAgainButtonStyle: CSSProperties = {
+            margin: "5%",
+            height: "8%",
+            fontSize: "24px",
+            fontWeight: "bold",
+            borderRadius: "50%",
+        };
+
+        const codeStyle: CSSProperties = {
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "center",
+            width: "50vh",
+            height: "8%"
         };
 
         return (
             <div style={outer}>
                 {
-                    this.state.gameLost ?
-                        <div>
-                            <div style={titleStyle}>
-                                <p>You lost the game. The code was...</p>
-                            </div>
-                            <button style={{ margin: "5%" }} onClick={this.onResetBoard}>Play again?</button>
-                            <div style={{ display: "flex", flexDirection: "row", justifyContent: "center", width: "50vh", height: "8%" }}>
+                    this.state.gameWon ?
+                        <div style={gameEndTextStype}>
+                            <p>You found the code!</p>
+                            <div style={codeStyle}>
                                 <ColorPin pinNumber={0} color={this.state.codeColors[0]} />
-                                <ColorPin pinNumber={0} color={this.state.codeColors[1]} />
-                                <ColorPin pinNumber={0} color={this.state.codeColors[2]} />
-                                <ColorPin pinNumber={0} color={this.state.codeColors[3]} />
+                                <ColorPin pinNumber={1} color={this.state.codeColors[1]} />
+                                <ColorPin pinNumber={2} color={this.state.codeColors[2]} />
+                                <ColorPin pinNumber={3} color={this.state.codeColors[3]} />
                             </div>
-                        </div> :
-                        this.state.gameWon ?
-                            <div style={titleStyle}>
-                                <p>You won the game</p>
-                                <button onClick={this.onResetBoard}>Play again?</button>
-                            </div>
-                            :
-                            <div style={gameboardStyle}>
-                                {
-                                    this.state.gameRows.map((row, index) =>
+                            <p>Congratulations!</p>
+                            <button style={playAgainButtonStyle} onClick={this.onResetBoard}>Play again?</button>
+                        </div>
+                        :
+                        <div style={gameboardStyle}>
+                            {
+                                this.state.gameRows.map((row, index) =>
 
-                                        <PinRow
-                                            key={index}
-                                            current={this.state.currentRow === index}
-                                            row={index}
-                                            pinColors={row.pinColors}
-                                            hintColors={row.hintColors}
-                                            onSetColor={this.onSetColor} />
-                                    )
+                                    <PinRow
+                                        key={index}
+                                        current={this.state.currentRow === index}
+                                        row={index}
+                                        pinColors={row.pinColors}
+                                        hintColors={row.hintColors}
+                                        onSetColor={this.onSetColor} />
+                                )}
+                            {
+                                this.state.gameLost ?
+                                    <div style={gameEndTextStype}>
+                                        <p>You lost the game. The code was...</p><br />
+                                        <div style={codeStyle}>
+                                            <ColorPin pinNumber={0} color={this.state.codeColors[0]} />
+                                            <ColorPin pinNumber={1} color={this.state.codeColors[1]} />
+                                            <ColorPin pinNumber={2} color={this.state.codeColors[2]} />
+                                            <ColorPin pinNumber={3} color={this.state.codeColors[3]} />
+                                        </div>
+                                        <button style={playAgainButtonStyle} onClick={this.onResetBoard}>Play again?</button>
+                                    </div>
+                                    : null
+                            }
+                            <div style={outer}>
+                                {this.allColorsSet() ?
+                                    <button style={doneButtonStyle} onClick={this.onMoveDone}>Done!</button>
+                                    : null
                                 }
-                                <div style={outer}>
-                                    {this.allColorsSet() ?
-                                        <button style={doneButtonStyle} onClick={this.onMoveDone}>Done!</button>
-                                        : null
-                                    }
-                                </div>
                             </div>
+                        </div>
                 }
             </div>
         );

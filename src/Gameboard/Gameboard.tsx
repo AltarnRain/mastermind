@@ -36,7 +36,7 @@ export class GameBoard extends React.Component<{}, State> {
             flexDirection: "row",
             justifyContent: "center",
             height: "90%",
-            width: "100%"
+            width: "100%",
         };
 
         const gameboardStyle: CSSProperties = {
@@ -47,14 +47,15 @@ export class GameBoard extends React.Component<{}, State> {
         };
 
         const doneButtonStyle: CSSProperties = {
-            display: "flex",
+            display: "flex-inline",
             borderRadius: "40%",
             width: "50%",
             height: "3%",
             backgroundColor: "gray",
             border: "1%",
             margin: "1%",
-            flexDirection: "row"
+            fontWeight: "bold",
+            alignItems: "center"
         };
 
         const gameEndTextStype: CSSProperties = {

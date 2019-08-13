@@ -76,3 +76,16 @@ it("returns 1 red and 1 white", () => {
     expect(result.rightColorRightPosition).toBe(1);
     expect(result.rightColorWrongPosition).toBe(1);
 });
+
+it("should return 3x red, one black", () => {
+    // Arrange
+    const codeColors: PinColors[] = ["green", "green", "blue", "cyan"];
+    const guessedColors: PinColors[] = ["green", "purple", "blue", "cyan"];
+
+    // Act
+    const result = HintProvider(guessedColors, codeColors);
+
+    // Assert
+    expect(result.rightColorRightPosition).toBe(3);
+    expect(result.rightColorWrongPosition).toBe(0);
+});

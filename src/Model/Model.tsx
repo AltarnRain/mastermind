@@ -40,7 +40,7 @@ export class Modal extends React.Component<Properties> {
             height = rectangle.height;
         }
 
-        const s: React.CSSProperties = {
+        const modelStyle: React.CSSProperties = {
             position: "absolute",
             display: "flex",
             left,
@@ -52,7 +52,7 @@ export class Modal extends React.Component<Properties> {
         };
 
         return ReactDOM.createPortal(
-            <div style={s}>
+            <div style={modelStyle}>
                 {
                     this.props.children
                 }

@@ -28,7 +28,8 @@ export class SelectColor extends React.Component<Properties> {
             display: "flex",
             flexDirection : "row",
             backgroundColor: "white",
-            height: "100%"
+            height: "100%",
+            justifyContent: "space-evenly"
         };
 
         return (

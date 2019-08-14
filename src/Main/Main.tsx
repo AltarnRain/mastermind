@@ -8,18 +8,6 @@ import { GameBoard } from "../Gameboard/Gameboard";
 export class Main extends React.Component {
 
     /**
-     * Constructs the main component.
-     */
-    constructor(props: object) {
-        super(props);
-
-        this.state = {
-            showGame: false,
-            showManual: false,
-        };
-    }
-
-    /**
      * Render the component.
      */
     public render(): React.ReactElement {

@@ -81,58 +81,57 @@ export class GameBoard extends React.Component<{}, State> {
             flexDirection: "row",
             justifyContent: "center",
             width: "50vh",
-            height: "8%"
+            height: "12%"
         };
 
         return (
             <div style={outer}>
                 {
-                    this.state.gameWon ?
-                        <div style={gameEndTextStype}>
-                            <p>You found the code!</p>
-                            <div style={codeStyle}>
-                                <ColorPin pinNumber={0} color={this.state.codeColors[0]} />
-                                <ColorPin pinNumber={1} color={this.state.codeColors[1]} />
-                                <ColorPin pinNumber={2} color={this.state.codeColors[2]} />
-                                <ColorPin pinNumber={3} color={this.state.codeColors[3]} />
-                            </div>
-                            <p>Congratulations!</p>
-                            <button style={playAgainButtonStyle} onClick={this.onResetBoard}>Play again?</button>
-                        </div>
-                        :
-                        <div style={gameboardStyle}>
-                            {
-                                this.state.gameRows.map((row, index) =>
+                    <div style={gameboardStyle}>
+                        {
+                            this.state.gameRows.map((row, index) =>
 
-                                    <PinRow
-                                        key={index}
-                                        current={this.state.currentRow === index}
-                                        row={index}
-                                        pinColors={row.pinColors}
-                                        hintColors={row.hintColors}
-                                        onSetColor={this.onSetColor} />
-                                )}
-                            {
-                                this.state.gameLost ?
+                                <PinRow
+                                    key={index}
+                                    current={this.state.currentRow === index}
+                                    row={index}
+                                    pinColors={row.pinColors}
+                                    hintColors={row.hintColors}
+                                    onSetColor={this.onSetColor} />
+                            )}
+                        {
+                            this.state.gameLost ?
+                                <div style={gameEndTextStype}>
+                                    <p>You lost the game. The code was...</p><br />
+                                    <div style={codeStyle}>
+                                        <ColorPin pinNumber={0} color={this.state.codeColors[0]} />
+                                        <ColorPin pinNumber={1} color={this.state.codeColors[1]} />
+                                        <ColorPin pinNumber={2} color={this.state.codeColors[2]} />
+                                        <ColorPin pinNumber={3} color={this.state.codeColors[3]} />
+                                    </div>
+                                    <button style={playAgainButtonStyle} onClick={this.onResetBoard}>Play again?</button>
+                                </div>
+                                : this.state.gameWon ?
                                     <div style={gameEndTextStype}>
-                                        <p>You lost the game. The code was...</p><br />
+                                        <p>You found the code!</p>
                                         <div style={codeStyle}>
                                             <ColorPin pinNumber={0} color={this.state.codeColors[0]} />
                                             <ColorPin pinNumber={1} color={this.state.codeColors[1]} />
                                             <ColorPin pinNumber={2} color={this.state.codeColors[2]} />
                                             <ColorPin pinNumber={3} color={this.state.codeColors[3]} />
                                         </div>
+                                        <p>Congratulations!</p>
                                         <button style={playAgainButtonStyle} onClick={this.onResetBoard}>Play again?</button>
                                     </div>
                                     : null
+                        }
+                        <div style={outer}>
+                            {this.allColorsSet() ?
+                                <button style={doneButtonStyle} onClick={this.onMoveDone}>Done!</button>
+                                : null
                             }
-                            <div style={outer}>
-                                {this.allColorsSet() ?
-                                    <button style={doneButtonStyle} onClick={this.onMoveDone}>Done!</button>
-                                    : null
-                                }
-                            </div>
                         </div>
+                    </div>
                 }
             </div>
         );
@@ -249,7 +248,7 @@ export class GameBoard extends React.Component<{}, State> {
             currentRow: 0,
             gameRows: this.getGameEmptyRows(),
             codeColors: this.getCode(),
-            gameLost: false,
+            gameLost: true,
             gameWon: false,
         };
     }

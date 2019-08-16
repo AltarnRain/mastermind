@@ -28,10 +28,8 @@ export class ColorPin extends React.Component<Properties> {
             color: this.props.color,
             backgroundColor: this.props.color,
             flexGrow: 0,
-            width: "14%",
-            height: "88%",
-            marginTop: "1%",
-            marginRight: "1%"
+            width: "100%",
+            height: "100%",
         };
 
         return (

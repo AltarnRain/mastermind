@@ -3,7 +3,6 @@
  */
 
 import React, { CSSProperties } from "react";
-import { ColorPin } from "../ColorPin/ColorPin";
 import { pinColors, PinColors } from "../Types/PinColors";
 import { Properties } from "./Properties";
 
@@ -16,7 +15,7 @@ export class SelectColor extends React.Component<Properties> {
     constructor(props: Properties) {
         super(props);
 
-        this.onPickColor = this.onPickColor.bind(this);
+        this.onClick = this.onClick.bind(this);
     }
 
     /**
@@ -26,7 +25,7 @@ export class SelectColor extends React.Component<Properties> {
 
         const selectColorStyle: CSSProperties = {
             display: "flex",
-            flexDirection : "row",
+            flexDirection: "row",
             backgroundColor: "white",
             height: "100%",
             justifyContent: "space-evenly"
@@ -35,15 +34,21 @@ export class SelectColor extends React.Component<Properties> {
         return (
             <div style={selectColorStyle} >
                 {
-                    pinColors.map((color, index) => <ColorPin key={index} pinNumber={index} color={color} onPickColor={this.onPickColor} />)
+                    pinColors.map((color, index) => <div key={index} onClick={this.onClick} style={{ height: "100%", width: "100%", backgroundColor: color }} ></div>)
                 }
             </div>
         );
     }
 
-    private onPickColor(color: PinColors): void {
+    /**
+     * Handles the click on a colored div element
+     * @param {React.SyntheticEvent<HTMLDivElement>} e. The event object
+     */
+    private onClick(e: React.SyntheticEvent<HTMLDivElement>) {
+        const target = e.target as HTMLDivElement;
+
         if (this.props.onPickColor) {
-            this.props.onPickColor(color);
+            this.props.onPickColor(target.style.backgroundColor as PinColors);
         }
     }
 }

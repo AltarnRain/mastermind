@@ -53,7 +53,7 @@ export class PinRow extends React.Component<Properties, State> {
                 {
                     this.props.pinColors.map((color, index) => (
                         <div key={index} style={{ display: "flex", width: "14%", height: "88%", marginTop: "1%" }}>
-                            <ColorPin  pinNumber={index} color={color} onPinClick={this.onPinClick} />
+                            <ColorPin pinNumber={index} color={color} onPinClick={this.onPinClick} />
                         </div>
                     ))
                 }

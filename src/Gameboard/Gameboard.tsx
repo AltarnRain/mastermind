@@ -248,7 +248,7 @@ export class GameBoard extends React.Component<{}, State> {
             currentRow: 0,
             gameRows: this.getGameEmptyRows(),
             codeColors: this.getCode(),
-            gameLost: true,
+            gameLost: false,
             gameWon: false,
         };
     }

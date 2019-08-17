@@ -6,7 +6,7 @@ import React, { CSSProperties } from "react";
 import { pinColors, PinColors } from "../Types/PinColors";
 import { Properties } from "./Properties";
 
-export class SelectColor extends React.Component<Properties> {
+export class ColorPicker extends React.Component<Properties> {
 
     /**
      * Constructs the component
@@ -48,6 +48,7 @@ export class SelectColor extends React.Component<Properties> {
         const target = e.target as HTMLDivElement;
 
         if (this.props.onPickColor) {
+            // Completely save cast. The color picker's div elements are set using PinColors
             this.props.onPickColor(target.style.backgroundColor as PinColors);
         }
     }

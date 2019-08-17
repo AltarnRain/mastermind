@@ -1,7 +1,7 @@
 import React, { CSSProperties } from "react";
+import { ColorPicker } from "../ColorPicker/ColorPicker";
 import { ColorPin } from "../ColorPin/ColorPin";
 import { Modal } from "../Model/Model";
-import { SelectColor } from "../SelectColor/SelectColor";
 import { PinColors } from "../Types/PinColors";
 import { Properties } from "./Properties";
 import { State } from "./State";
@@ -60,7 +60,7 @@ export class PinRow extends React.Component<Properties, State> {
                 {
                     this.state.showPinPicker ?
                         <Modal element={this.rowRef}>
-                            <SelectColor onPickColor={this.onPickColor} />
+                            <ColorPicker onPickColor={this.onPickColor} />
                         </Modal>
                         : null
                 }

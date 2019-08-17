@@ -104,10 +104,10 @@ export class GameBoard extends React.Component<{}, State> {
                                 <div style={gameEndTextStype}>
                                     <p>You lost the game. The code was...</p><br />
                                     <div style={codeStyle}>
-                                        <ColorPin pinNumber={0} color={this.state.codeColors[0]} />
-                                        <ColorPin pinNumber={1} color={this.state.codeColors[1]} />
-                                        <ColorPin pinNumber={2} color={this.state.codeColors[2]} />
-                                        <ColorPin pinNumber={3} color={this.state.codeColors[3]} />
+                                        <ColorPin enabled={false} pinNumber={0} color={this.state.codeColors[0]} />
+                                        <ColorPin enabled={false} pinNumber={1} color={this.state.codeColors[1]} />
+                                        <ColorPin enabled={false} pinNumber={2} color={this.state.codeColors[2]} />
+                                        <ColorPin enabled={false} pinNumber={3} color={this.state.codeColors[3]} />
                                     </div>
                                     <button style={playAgainButtonStyle} onClick={this.onResetBoard}>Play again?</button>
                                 </div>
@@ -115,10 +115,10 @@ export class GameBoard extends React.Component<{}, State> {
                                     <div style={gameEndTextStype}>
                                         <p>You found the code!</p>
                                         <div style={codeStyle}>
-                                            <ColorPin pinNumber={0} color={this.state.codeColors[0]} />
-                                            <ColorPin pinNumber={1} color={this.state.codeColors[1]} />
-                                            <ColorPin pinNumber={2} color={this.state.codeColors[2]} />
-                                            <ColorPin pinNumber={3} color={this.state.codeColors[3]} />
+                                            <ColorPin enabled={false} pinNumber={0} color={this.state.codeColors[0]} />
+                                            <ColorPin enabled={false} pinNumber={1} color={this.state.codeColors[1]} />
+                                            <ColorPin enabled={false} pinNumber={2} color={this.state.codeColors[2]} />
+                                            <ColorPin enabled={false} pinNumber={3} color={this.state.codeColors[3]} />
                                         </div>
                                         <p>Congratulations!</p>
                                         <button style={playAgainButtonStyle} onClick={this.onResetBoard}>Play again?</button>

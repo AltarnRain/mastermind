@@ -10,7 +10,7 @@ export interface Properties {
     /**
      * True if this row is the current row.
      */
-    current?: boolean;
+    current: boolean;
 
     /**
      * The colors of this row.

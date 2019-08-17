@@ -3,5 +3,5 @@
  */
 
 export interface Properties {
-    element: React.RefObject<HTMLDivElement>;
+    element: React.RefObject<HTMLElement>;
 }

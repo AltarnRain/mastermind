@@ -16,6 +16,8 @@ export interface Properties {
      */
     pinNumber: number;
 
+    enabled: boolean;
+
     /**
      * An event fired when the users selects a pin in a row.
      * @param {number} pinNumber. The location of the pin in a row.

@@ -47,7 +47,7 @@ export class ColorPin extends React.Component<Properties, State> {
                 <button ref={this.buttonRef} onClick={this.onClick} style={colorPinStyle}></button>
                 {
                     this.state.showColorPicker ?
-                        <Modal position="center" element={this.buttonRef} widthMultiplier={3} heightMultiplier={0.5} onUserClickedOutside={this.onCloseColorPicker} workAreaRef={this.props.gameDivRef} >
+                        <Modal position="center" element={this.buttonRef} widthMultiplier={4.5} heightMultiplier={0.7} onUserClickedOutside={this.onCloseColorPicker} workAreaRef={this.props.gameDivRef} >
                             <ColorPicker onPickColor={this.onPickColor} />
                         </Modal>
                         : null

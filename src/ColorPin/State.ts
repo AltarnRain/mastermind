@@ -6,6 +6,4 @@ import { PinColors } from "../Types/PinColors";
 
 export interface State {
     showColorPicker: boolean;
-
-    color: PinColors;
 }

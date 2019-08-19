@@ -31,4 +31,9 @@ export interface State {
      * When true, the player lost the game.
      */
     gameLost: boolean;
+
+    /**
+     * Flag to show the game menu or not.
+     */
+    showMenu: boolean;
 }

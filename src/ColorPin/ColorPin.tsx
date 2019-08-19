@@ -4,7 +4,7 @@
 
 import React, { CSSProperties } from "react";
 import { ColorPicker } from "../ColorPicker/ColorPicker";
-import { Modal } from "../Model/Model";
+import { Modal } from "../Modal/Modal";
 import { PinColors } from "../Types/PinColors";
 import { Properties } from "./Properties";
 import { State } from "./State";
@@ -20,7 +20,7 @@ export class ColorPin extends React.Component<Properties, State> {
     constructor(props: Properties) {
         super(props);
 
-        this.state = { showColorPicker: false, color: this.props.color };
+        this.state = { showColorPicker: false };
 
         this.onClick = this.onClick.bind(this);
         this.onPickColor = this.onPickColor.bind(this);
@@ -36,7 +36,7 @@ export class ColorPin extends React.Component<Properties, State> {
             display: "flex",
             borderRadius: "50%",
             color: this.props.color,
-            backgroundColor: this.state.color,
+            backgroundColor: this.props.color,
             flexGrow: 0,
             width: "100%",
             height: "100%",
@@ -57,14 +57,16 @@ export class ColorPin extends React.Component<Properties, State> {
     }
 
     private onCloseColorPicker(): void {
-        this.setState({showColorPicker: false});
+        this.setState({ showColorPicker: false });
     }
 
     /**
      * Handlers the click on a pin.
      */
     private onClick(): void {
-        this.setState({ showColorPicker: true });
+        if (this.props.enabled) {
+            this.setState({ showColorPicker: true });
+        }
     }
 
     /**
@@ -72,11 +74,9 @@ export class ColorPin extends React.Component<Properties, State> {
      * @param {PinColors} color. Preset colors.
      */
     private onPickColor(color: PinColors): void {
-        if (this.props.enabled) {
-            this.setState({ showColorPicker: false, color });
-            if (this.props.onPickColor) {
-                this.props.onPickColor(color);
-            }
+        this.setState({ showColorPicker: false });
+        if (this.props.onSetColor) {
+            this.props.onSetColor(this.props.pinNumber, color);
         }
     }
 }

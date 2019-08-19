@@ -101,7 +101,7 @@ export class GameBoard extends React.Component<{}, State> {
                                     hintColors={row.hintColors}
                                     onSetColor={this.onSetColor}
                                     gameDivRef={this.gameDivRef}
-                                    />
+                                />
                             )}
                         {
                             this.state.gameLost ?
@@ -254,6 +254,7 @@ export class GameBoard extends React.Component<{}, State> {
             codeColors: this.getCode(),
             gameLost: false,
             gameWon: false,
+            showMenu: false
         };
     }
 
@@ -270,6 +271,10 @@ export class GameBoard extends React.Component<{}, State> {
         return gameRows;
     }
 
+    /**
+     * Check if all colors are set.
+     * @returns {boolean}. True when all colors of the current row are not black.
+     */
     private allColorsSet(): boolean {
         return this.state.gameRows[this.state.currentRow].pinColors.filter((color) => color === "black").length === 0;
     }

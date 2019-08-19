@@ -1,3 +1,7 @@
+/**
+ * Generic Modal component.
+ */
+
 import React from "react";
 import ReactDOM from "react-dom";
 import { Properties } from "./Properties";

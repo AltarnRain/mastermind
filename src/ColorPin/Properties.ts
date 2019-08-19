@@ -18,6 +18,9 @@ export interface Properties {
      */
     pinNumber: number;
 
+    /**
+     * When true, handle clicks.
+     */
     enabled: boolean;
 
     /**
@@ -30,5 +33,5 @@ export interface Properties {
      * An event fired when the user selects a color of a pin.
      * @param {PinColors} color. One of the defined colors for the game.
      */
-    onPickColor?(color: PinColors): void;
+    onSetColor?(pinNumber: number, color: PinColors): void;
 }

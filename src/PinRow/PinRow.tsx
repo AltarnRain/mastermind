@@ -1,8 +1,19 @@
 import React, { CSSProperties } from "react";
 import { ColorPin } from "../ColorPin/ColorPin";
+import { PinColors } from "../Types/PinColors";
 import { Properties } from "./Properties";
 
 export class PinRow extends React.Component<Properties> {
+
+    /**
+     *
+     */
+    constructor(props: Properties) {
+        super(props);
+
+        this.onSetColor = this.onSetColor.bind(this);
+
+    }
     public render(): React.ReactNode {
 
         const colorPinStyle: CSSProperties = {
@@ -31,7 +42,7 @@ export class PinRow extends React.Component<Properties> {
                 {
                     this.props.pinColors.map((color, index) => (
                         <div key={index} style={{ display: "flex", width: "14%", height: "88%", marginTop: "1%" }}>
-                            <ColorPin enabled={this.props.current} pinNumber={index} color={color} gameDivRef={this.props.gameDivRef} />
+                            <ColorPin enabled={this.props.current} pinNumber={index} color={color} gameDivRef={this.props.gameDivRef} onSetColor={this.onSetColor} />
                         </div>
                     ))
                 }
@@ -44,5 +55,11 @@ export class PinRow extends React.Component<Properties> {
                 </div>
             </div>
         );
+    }
+
+    private onSetColor(pinNunber: number, color: PinColors): void {
+        if (this.props.onSetColor && typeof this.props.row !== "undefined") {
+            this.props.onSetColor(this.props.row, pinNunber, color);
+        }
     }
 }

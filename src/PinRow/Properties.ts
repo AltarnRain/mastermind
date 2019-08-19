@@ -27,7 +27,7 @@ export interface Properties {
     /**
      * This row's nunmber
      */
-    row?: number;
+    row: number;
 
     /**
      * Event handler for setting a color for a pin.

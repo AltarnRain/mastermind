@@ -34,7 +34,8 @@ export class ColorPicker extends React.Component<Properties> {
         return (
             <div style={selectColorStyle} >
                 {
-                    pinColors.map((color, index) => <div key={index} onClick={this.onClick} style={{ height: "100%", width: "100%", backgroundColor: color }} ></div>)
+                    // Set the DIV's ID to Modal to the Modal component knows it should not stop this div's click event.
+                    pinColors.map((color, index) => <div id={"modal"} key={index} onClick={this.onClick} style={{ height: "100%", width: "100%", backgroundColor: color }} ></div>)
                 }
             </div>
         );

@@ -19,7 +19,7 @@ export class Modal extends React.Component<Properties> {
         this.portalAnchor = document.createElement("div");
         this.modalRoot = document.getElementById("portalRoot");
 
-        this.userClickedOutside = this.userClickedOutside.bind(this);
+        this.onClick = this.onClick.bind(this);
     }
 
     public componentDidMount() {
@@ -27,7 +27,7 @@ export class Modal extends React.Component<Properties> {
             this.modalRoot.appendChild(this.portalAnchor);
         }
 
-        document.addEventListener("mousedown", this.userClickedOutside);
+        document.addEventListener("mousedown", this.onClick);
     }
 
     public componentWillUnmount() {
@@ -35,7 +35,7 @@ export class Modal extends React.Component<Properties> {
             this.modalRoot.removeChild(this.portalAnchor);
         }
 
-        document.removeEventListener("mousedown", this.userClickedOutside);
+        document.removeEventListener("mousedown", this.onClick);
     }
 
     public render() {
@@ -97,9 +97,19 @@ export class Modal extends React.Component<Properties> {
         );
     }
 
-    private userClickedOutside(): void {
+    /**
+     * Event that is fired whenever the user clicks the mouse.
+     * @param {MouseEvent} e. The event object from the mouse click
+     */
+    private onClick(e: MouseEvent): void {
         if (this.modalRoot && this.props.onUserClickedOutside) {
-            this.props.onUserClickedOutside();
+
+            const target = e.target as Element;
+
+            // If the target's ID is 'modal' then this element is part of the pop-up and the 'onUserClickedOutside' should not be fired.
+            if (target && target.id !== "modal") {
+                this.props.onUserClickedOutside();
+            }
         }
     }
 }

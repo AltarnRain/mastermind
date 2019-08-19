@@ -5,6 +5,7 @@
 import React, { CSSProperties } from "react";
 import { ColorPin } from "../ColorPin/ColorPin";
 import { HintProvider, randomizeArray } from "../HelperFunctions";
+import { Menu } from "../Menu/Menu";
 import { PinRow } from "../PinRow/PinRow";
 import { HintColors } from "../Types/HintColors";
 import { pinColors, PinColors } from "../Types/PinColors";
@@ -26,6 +27,9 @@ export class GameBoard extends React.Component<{}, State> {
         this.onMoveDone = this.onMoveDone.bind(this);
         this.onSetColor = this.onSetColor.bind(this);
         this.onResetBoard = this.onResetBoard.bind(this);
+        this.onShowMenu = this.onShowMenu.bind(this);
+        this.onHideMenu = this.onHideMenu.bind(this);
+        this.onEndGame = this.onEndGame.bind(this);
     }
 
     /**
@@ -89,53 +93,62 @@ export class GameBoard extends React.Component<{}, State> {
         return (
             <div style={outer}>
                 {
-                    <div ref={this.gameDivRef} style={gameboardStyle}>
+                    <>
                         {
-                            this.state.gameRows.map((row, index) =>
+                            this.state.showMenu ? <Menu
+                                onClose={this.onHideMenu}
+                                onEndGame={this.onEndGame}
+                            /> :
+                                <div ref={this.gameDivRef} style={gameboardStyle}>
+                                    <button style={{ position: "absolute", left: 0, top: 0 }} onClick={this.onShowMenu}>Menu</button>
+                                    {
+                                        this.state.gameRows.map((row, index) =>
 
-                                <PinRow
-                                    key={index}
-                                    current={this.state.currentRow === index}
-                                    row={index}
-                                    pinColors={row.pinColors}
-                                    hintColors={row.hintColors}
-                                    onSetColor={this.onSetColor}
-                                    gameDivRef={this.gameDivRef}
-                                />
-                            )}
-                        {
-                            this.state.gameLost ?
-                                <div style={gameEndTextStype}>
-                                    <p>You lost the game. The code was...</p><br />
-                                    <div style={codeStyle}>
-                                        <ColorPin enabled={false} pinNumber={0} color={this.state.codeColors[0]} />
-                                        <ColorPin enabled={false} pinNumber={1} color={this.state.codeColors[1]} />
-                                        <ColorPin enabled={false} pinNumber={2} color={this.state.codeColors[2]} />
-                                        <ColorPin enabled={false} pinNumber={3} color={this.state.codeColors[3]} />
+                                            <PinRow
+                                                key={index}
+                                                current={this.state.currentRow === index}
+                                                row={index}
+                                                pinColors={row.pinColors}
+                                                hintColors={row.hintColors}
+                                                onSetColor={this.onSetColor}
+                                                gameDivRef={this.gameDivRef}
+                                            />
+                                        )}
+                                    {
+                                        this.state.gameLost ?
+                                            <div style={gameEndTextStype}>
+                                                <p>You lost the game. The code was...</p><br />
+                                                <div style={codeStyle}>
+                                                    <ColorPin enabled={false} pinNumber={0} color={this.state.codeColors[0]} />
+                                                    <ColorPin enabled={false} pinNumber={1} color={this.state.codeColors[1]} />
+                                                    <ColorPin enabled={false} pinNumber={2} color={this.state.codeColors[2]} />
+                                                    <ColorPin enabled={false} pinNumber={3} color={this.state.codeColors[3]} />
+                                                </div>
+                                                <button style={playAgainButtonStyle} onClick={this.onResetBoard}>Play again?</button>
+                                            </div>
+                                            : this.state.gameWon ?
+                                                <div style={gameEndTextStype}>
+                                                    <p>You found the code!</p>
+                                                    <div style={codeStyle}>
+                                                        <ColorPin enabled={false} pinNumber={0} color={this.state.codeColors[0]} />
+                                                        <ColorPin enabled={false} pinNumber={1} color={this.state.codeColors[1]} />
+                                                        <ColorPin enabled={false} pinNumber={2} color={this.state.codeColors[2]} />
+                                                        <ColorPin enabled={false} pinNumber={3} color={this.state.codeColors[3]} />
+                                                    </div>
+                                                    <p>Congratulations!</p>
+                                                    <button style={playAgainButtonStyle} onClick={this.onResetBoard}>Play again?</button>
+                                                </div>
+                                                : null
+                                    }
+                                    <div style={outer}>
+                                        {this.allColorsSet() ?
+                                            <button style={doneButtonStyle} onClick={this.onMoveDone}>Done!</button>
+                                            : null
+                                        }
                                     </div>
-                                    <button style={playAgainButtonStyle} onClick={this.onResetBoard}>Play again?</button>
                                 </div>
-                                : this.state.gameWon ?
-                                    <div style={gameEndTextStype}>
-                                        <p>You found the code!</p>
-                                        <div style={codeStyle}>
-                                            <ColorPin enabled={false} pinNumber={0} color={this.state.codeColors[0]} />
-                                            <ColorPin enabled={false} pinNumber={1} color={this.state.codeColors[1]} />
-                                            <ColorPin enabled={false} pinNumber={2} color={this.state.codeColors[2]} />
-                                            <ColorPin enabled={false} pinNumber={3} color={this.state.codeColors[3]} />
-                                        </div>
-                                        <p>Congratulations!</p>
-                                        <button style={playAgainButtonStyle} onClick={this.onResetBoard}>Play again?</button>
-                                    </div>
-                                    : null
                         }
-                        <div style={outer}>
-                            {this.allColorsSet() ?
-                                <button style={doneButtonStyle} onClick={this.onMoveDone}>Done!</button>
-                                : null
-                            }
-                        </div>
-                    </div>
+                    </>
                 }
             </div>
         );
@@ -277,5 +290,23 @@ export class GameBoard extends React.Component<{}, State> {
      */
     private allColorsSet(): boolean {
         return this.state.gameRows[this.state.currentRow].pinColors.filter((color) => color === "black").length === 0;
+    }
+
+    /**
+     * Hides the menu
+     */
+    private onHideMenu(): void {
+        this.setState({ showMenu: false });
+    }
+
+    private onShowMenu(): void {
+        this.setState({ showMenu: true });
+    }
+
+    /**
+     * End Game
+     */
+    private onEndGame(): void {
+        this.setState({ gameLost: true, showMenu: false });
     }
 }

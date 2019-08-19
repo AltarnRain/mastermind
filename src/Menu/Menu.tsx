@@ -2,25 +2,37 @@
  * Side panel component
  */
 
-import React from "react";
+import React, { CSSProperties } from "react";
 import { Properties} from "./Properties";
 
 export class Menu extends React.Component<Properties> {
 
     /**
-     *
+     * Constructs the component.
      */
     constructor(props: Properties) {
         super(props);
 
         this.onClose = this.onClose.bind(this);
+        this.onEndGame = this.onEndGame.bind(this);
     }
-    public render() {
+
+    /**
+     * Renders the component.
+     */
+
+    public render(): React.ReactNode {
+
+        const buttonStyle: CSSProperties = {
+            margin: "5%"
+        }
+
         return (
-            <>
-                <span><p>Hello menu.</p></span>
-                <button onClick={this.onClose}>Close</button>
-            </>
+            <div style={{display: "flex", flexDirection: "column"}}>
+                <p>Menu</p>
+                <button style={buttonStyle} onClick={this.onEndGame}>Give up</button>
+                <button style={buttonStyle} onClick={this.onClose}>Close</button>
+            </div>
         );
     }
 
@@ -30,6 +42,15 @@ export class Menu extends React.Component<Properties> {
     private onClose(): void {
         if (this.props.onClose) {
             this.props.onClose();
+        }
+    }
+
+    /**
+     * Ends the game.
+     */
+    private onEndGame(): void {
+        if (this.props.onEndGame) {
+            this.props.onEndGame();
         }
     }
 }

@@ -11,5 +11,10 @@ export interface Properties{
     /**
      * Ends the game
      */
-    onEndGame?(): void
+    onEndGame?(): void;
+
+    /**
+     * handles on code to console click
+     */
+    onCodeToConsole?(): void;
 }

@@ -30,6 +30,7 @@ export class GameBoard extends React.Component<{}, State> {
         this.onShowMenu = this.onShowMenu.bind(this);
         this.onHideMenu = this.onHideMenu.bind(this);
         this.onEndGame = this.onEndGame.bind(this);
+        this.onCodeToConsole = this.onCodeToConsole.bind(this);
     }
 
     /**
@@ -98,6 +99,7 @@ export class GameBoard extends React.Component<{}, State> {
                             this.state.showMenu ? <Menu
                                 onClose={this.onHideMenu}
                                 onEndGame={this.onEndGame}
+                                onCodeToConsole={this.onCodeToConsole}
                             /> :
                                 <div ref={this.gameDivRef} style={gameboardStyle}>
                                     <button style={{ position: "absolute", left: 0, top: 0 }} onClick={this.onShowMenu}>Menu</button>
@@ -141,7 +143,7 @@ export class GameBoard extends React.Component<{}, State> {
                                                 : null
                                     }
                                     <div style={outer}>
-                                        {this.allColorsSet() ?
+                                        {this.allColorsSet() && this.state.gameWon === false && this.state.gameLost === false ?
                                             <button style={doneButtonStyle} onClick={this.onMoveDone}>Done!</button>
                                             : null
                                         }
@@ -204,12 +206,12 @@ export class GameBoard extends React.Component<{}, State> {
         const hints = HintProvider(currentGameRow.pinColors, this.state.codeColors);
 
         if (hints.rightColorRightPosition === 4) {
-            this.setState({ gameWon: true });
+            this.onGameWon();
             return;
         }
 
         if (this.state.currentRow === 11 && hints.rightColorRightPosition !== 4) {
-            this.setState({ gameLost: true });
+            this.onGameLost();
             return;
         }
 
@@ -307,6 +309,29 @@ export class GameBoard extends React.Component<{}, State> {
      * End Game
      */
     private onEndGame(): void {
-        this.setState({ gameLost: true, showMenu: false });
+        this.setState({showMenu: false}, () => this.onGameLost());
+    }
+
+    /**
+     * Handles wining the game.
+     */
+    private onGameWon(): void {
+        this.setState({ gameWon: true }, () =>  window.scrollTo(0, document.body.scrollHeight));
+    }
+
+    /**
+     * Handles a lost game
+     */
+    private onGameLost(): void {
+        this.setState({ gameLost: true }, () => window.scrollTo(0, document.body.scrollHeight));
+    }
+
+    /**
+     * Prints the current code to the console.
+     */
+    private onCodeToConsole(): void {
+        // Allow users to debug, or cheat.
+        // tslint:disable-next-line: no-console
+        console.log(this.state.codeColors);
     }
 }

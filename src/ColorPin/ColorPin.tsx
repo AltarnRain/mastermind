@@ -24,6 +24,7 @@ export class ColorPin extends React.Component<Properties, State> {
 
         this.onClick = this.onClick.bind(this);
         this.onPickColor = this.onPickColor.bind(this);
+        this.onCloseColorPicker = this.onCloseColorPicker.bind(this);
     }
 
     /**
@@ -46,13 +47,17 @@ export class ColorPin extends React.Component<Properties, State> {
                 <button ref={this.buttonRef} onClick={this.onClick} style={colorPinStyle}></button>
                 {
                     this.state.showColorPicker ?
-                        <Modal element={this.buttonRef}>
+                        <Modal position="center" element={this.buttonRef} widthMultiplier={3} heightMultiplier={0.5} onUserClickedOutside={this.onCloseColorPicker} workAreaRef={this.props.gameDivRef} >
                             <ColorPicker onPickColor={this.onPickColor} />
                         </Modal>
                         : null
                 }
             </>
         );
+    }
+
+    private onCloseColorPicker(): void {
+        this.setState({showColorPicker: false});
     }
 
     /**
@@ -69,6 +74,9 @@ export class ColorPin extends React.Component<Properties, State> {
     private onPickColor(color: PinColors): void {
         if (this.props.enabled) {
             this.setState({ showColorPicker: false, color });
+            if (this.props.onPickColor) {
+                this.props.onPickColor(color);
+            }
         }
     }
 }

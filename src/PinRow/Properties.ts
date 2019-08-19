@@ -7,6 +7,8 @@ import { PinColors } from "../Types/PinColors";
 
 export interface Properties {
 
+    gameDivRef: React.RefObject<HTMLDivElement>;
+
     /**
      * True if this row is the current row.
      */

@@ -13,6 +13,8 @@ import { State } from "./State";
 
 export class GameBoard extends React.Component<{}, State> {
 
+    private gameDivRef = React.createRef<HTMLDivElement>();
+
     /**
      * Constructs the Gameboard
      */
@@ -87,7 +89,7 @@ export class GameBoard extends React.Component<{}, State> {
         return (
             <div style={outer}>
                 {
-                    <div style={gameboardStyle}>
+                    <div ref={this.gameDivRef} style={gameboardStyle}>
                         {
                             this.state.gameRows.map((row, index) =>
 
@@ -97,7 +99,9 @@ export class GameBoard extends React.Component<{}, State> {
                                     row={index}
                                     pinColors={row.pinColors}
                                     hintColors={row.hintColors}
-                                    onSetColor={this.onSetColor} />
+                                    onSetColor={this.onSetColor}
+                                    gameDivRef={this.gameDivRef}
+                                    />
                             )}
                         {
                             this.state.gameLost ?

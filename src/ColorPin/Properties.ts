@@ -6,6 +6,8 @@ import { PinColors } from "../Types/PinColors";
 
 export interface Properties {
 
+    gameDivRef?: React.RefObject<HTMLDivElement>;
+
     /**
      * The color of the pin.
      */

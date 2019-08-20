@@ -308,6 +308,6 @@ export class GameBoard extends React.Component<{}, State> {
     private onCodeToConsole(): void {
         // Allow users to debug, or cheat.
         // tslint:disable-next-line: no-console
-        console.log(this.state.codeColors);
+        this.state.codeColors.forEach((color) => console.log(color));
     }
 }

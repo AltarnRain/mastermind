@@ -30,7 +30,7 @@ export class GameBoard extends React.Component<{}, State> {
         this.onShowMenu = this.onShowMenu.bind(this);
         this.onHideMenu = this.onHideMenu.bind(this);
         this.onEndGame = this.onEndGame.bind(this);
-        this.onCodeToConsole = this.onCodeToConsole.bind(this);
+        this.onShowCode = this.onShowCode.bind(this);
         this.onMoveDone = this.onMoveDone.bind(this);
     }
 
@@ -88,7 +88,7 @@ export class GameBoard extends React.Component<{}, State> {
                             this.state.showMenu ? <Menu
                                 onClose={this.onHideMenu}
                                 onEndGame={this.onEndGame}
-                                onCodeToConsole={this.onCodeToConsole}
+                                onCodeToConsole={this.onShowCode}
                             /> :
                                 <div ref={this.gameDivRef} style={gameboardStyle}>
                                     <button style={{ position: "absolute", left: 0, top: 0 }} onClick={this.onShowMenu}>Menu</button>
@@ -305,9 +305,13 @@ export class GameBoard extends React.Component<{}, State> {
     /**
      * Prints the current code to the console.
      */
-    private onCodeToConsole(): void {
+    private onShowCode(): void {
         // Allow users to debug, or cheat.
+        const code = "Code: " + this.state.codeColors.join(", ");
+
         // tslint:disable-next-line: no-console
-        this.state.codeColors.forEach((color) => console.log(color));
+        console.log(code);
+
+        alert(code);
     }
 }

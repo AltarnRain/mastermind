@@ -108,7 +108,7 @@ export class GameBoard extends React.Component<{}, State> {
 
                                             <PinRow
                                                 key={index}
-                                                current={this.state.currentRow === index}
+                                                current={this.state.currentRow === index && !(this.state.gameLost || this.state.gameWon)}
                                                 row={index}
                                                 pinColors={row.pinColors}
                                                 hintColors={row.hintColors}
@@ -142,7 +142,7 @@ export class GameBoard extends React.Component<{}, State> {
                                                 </div>
                                                 : null
                                     }
-                                    <div style={outer}>
+                                    <div>
                                         {this.allColorsSet() && this.state.gameWon === false && this.state.gameLost === false ?
                                             <button style={doneButtonStyle} onClick={this.onMoveDone}>Done!</button>
                                             : null

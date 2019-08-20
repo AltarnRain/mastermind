@@ -36,4 +36,9 @@ export interface Properties {
      * @param {PinColors} color. The color of the pin.
      */
     onSetColor?(row: number, pinNumber: number, pinColor: PinColors): void;
+
+    /**
+     * Event called when the player is done entering their colors.
+     */
+    onMoveDone?(): void;
 }

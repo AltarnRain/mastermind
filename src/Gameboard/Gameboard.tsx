@@ -31,6 +31,7 @@ export class GameBoard extends React.Component<{}, State> {
         this.onHideMenu = this.onHideMenu.bind(this);
         this.onEndGame = this.onEndGame.bind(this);
         this.onCodeToConsole = this.onCodeToConsole.bind(this);
+        this.onMoveDone = this.onMoveDone.bind(this);
     }
 
     /**
@@ -50,19 +51,7 @@ export class GameBoard extends React.Component<{}, State> {
             backgroundColor: "brown",
             flexShrink: 0,
             flexDirection: "column",
-            width: "50vh"
-        };
-
-        const doneButtonStyle: CSSProperties = {
-            display: "flex-inline",
-            borderRadius: "40%",
-            width: "50%",
-            height: "3%",
-            backgroundColor: "gray",
-            border: "1%",
-            margin: "1%",
-            fontWeight: "bold",
-            alignItems: "center"
+            width: "46vh"
         };
 
         const gameEndTextStype: CSSProperties = {
@@ -114,6 +103,7 @@ export class GameBoard extends React.Component<{}, State> {
                                                 hintColors={row.hintColors}
                                                 onSetColor={this.onSetColor}
                                                 gameDivRef={this.gameDivRef}
+                                                onMoveDone={this.onMoveDone}
                                             />
                                         )}
                                     {
@@ -142,12 +132,6 @@ export class GameBoard extends React.Component<{}, State> {
                                                 </div>
                                                 : null
                                     }
-                                    <div>
-                                        {this.allColorsSet() && this.state.gameWon === false && this.state.gameLost === false ?
-                                            <button style={doneButtonStyle} onClick={this.onMoveDone}>Done!</button>
-                                            : null
-                                        }
-                                    </div>
                                 </div>
                         }
                     </>
@@ -287,14 +271,6 @@ export class GameBoard extends React.Component<{}, State> {
     }
 
     /**
-     * Check if all colors are set.
-     * @returns {boolean}. True when all colors of the current row are not black.
-     */
-    private allColorsSet(): boolean {
-        return this.state.gameRows[this.state.currentRow].pinColors.filter((color) => color === "black").length === 0;
-    }
-
-    /**
      * Hides the menu
      */
     private onHideMenu(): void {
@@ -309,14 +285,14 @@ export class GameBoard extends React.Component<{}, State> {
      * End Game
      */
     private onEndGame(): void {
-        this.setState({showMenu: false}, () => this.onGameLost());
+        this.setState({ showMenu: false }, () => this.onGameLost());
     }
 
     /**
      * Handles wining the game.
      */
     private onGameWon(): void {
-        this.setState({ gameWon: true }, () =>  window.scrollTo(0, document.body.scrollHeight));
+        this.setState({ gameWon: true }, () => window.scrollTo(0, document.body.scrollHeight));
     }
 
     /**

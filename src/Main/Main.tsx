@@ -18,7 +18,7 @@ export class Main extends React.Component {
         };
 
         return (
-            <div style={{ height: "100vh", textAlign: "center" }} >
+            <div style={{ height: "95vh", textAlign: "center" }} >
                 <p style={titleStyle}>Mastermind</p>
                 <GameBoard />
             </div>
